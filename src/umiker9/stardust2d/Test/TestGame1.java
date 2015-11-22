@@ -8,6 +8,7 @@ import umiker9.stardust2d.Stardust2D;
 /**
  * Created by miker9 on 22/11/2015.
  */
+
 public class TestGame1 extends BasicGame {
 
     private static TestGame1 instance;

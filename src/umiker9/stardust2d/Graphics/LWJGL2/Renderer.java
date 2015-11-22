@@ -21,6 +21,7 @@ public class Renderer {
     }
 
     public void init() {
+        glClearColor(1, 0, 0, 0);
         glEnable(GL_TEXTURE_2D);
 
         updateMatrices();
