@@ -7,6 +7,11 @@ import org.lwjgl.opengl.Display;
 import umiker9.stardust2d.Systems.Error.Error;
 import umiker9.stardust2d.Systems.Error.ErrorBuilder;
 import umiker9.stardust2d.Systems.Error.ErrorStack;
+import umiker9.stardust2d.Systems.Log.LogLevel;
+import umiker9.stardust2d.Systems.Log.Logger;
+import umiker9.stardust2d.Systems.Log.Message;
+
+import java.io.*;
 
 /**
  * Created by miker9 on 22/11/2015.
@@ -38,7 +43,22 @@ public class BasicGame {
     }
 
     public void start() {
-        System.out.println("[Stardust] " + Stardust2D.getName() + " " + Stardust2D.getVersion());
+        boolean success = false;
+        try {
+            File f = new File("log.txt");
+            if((!f.exists() || f.delete()) && f.createNewFile()) {
+                PrintStream toFile = new PrintStream(f);
+                Logger.createInstance(new Logger(System.out, toFile));
+                success = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(!success) {
+            Logger.createDefaultInstance();
+        }
+        Logger.setDefaultLevelInst(LogLevel.INFO);
+        Logger.logInst("[Stardust] " + Stardust2D.getName() + " " + Stardust2D.getVersion());
 
         init();
         run();
@@ -46,22 +66,22 @@ public class BasicGame {
     }
 
     protected void init() {
-        System.out.println("[Stardust] Initialising display");
+        Logger.logInst("[Stardust] Initialising display");
         try {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
             e.printStackTrace();
-            System.out.println("[Stardust] Error during LWJGL initialisation. Exiting..");
+            Logger.logInst(Logger.newCritError("[Stardust] Error during LWJGL initialisation. Exiting.."));
             exit(1);
         }
         window.setTitle(title);
         window.setVSyncEnabled(true);
 
-        System.out.println("[Stardust] initialising renderer");
+        Logger.logInst("[Stardust] initialising renderer");
         renderer = new Renderer(width, height, true);
         renderer.init();
-        System.out.println("[Stardust] Using OpenGL " + renderer.getGLVersion());
-        System.out.println("[Stardust] Engine initialisation is finished");
+        Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
+        Logger.logInst("[Stardust] Engine initialisation is finished");
     }
 
     protected void run() {
@@ -71,7 +91,8 @@ public class BasicGame {
         while (!Window.isCloseRequested()) {
 
             while(ErrorStack.hasErrors()) {
-                System.out.println("[Stardust] " + ErrorStack.getNextError());
+                Logger.setLevelInst(LogLevel.ERROR);
+                Logger.logInst("[Stardust] " + ErrorStack.getNextError());
             }
 
 
@@ -107,9 +128,9 @@ public class BasicGame {
 
     private void exit(int errorCode) {
         if(errorCode == 0) {
-            System.out.println("[Stardust] Exiting with no errors");
+            Logger.logInst("[Stardust] Exiting with no errors");
         } else {
-            System.out.println("[Stardust] Exiting with error code " + errorCode);
+            Logger.logInst(new Message(LogLevel.ERROR, "[Stardust] Exiting with error code " + errorCode));
         }
         System.exit(errorCode);
     }
