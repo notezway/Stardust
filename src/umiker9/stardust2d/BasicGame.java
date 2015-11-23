@@ -19,6 +19,7 @@ public class BasicGame {
     private int width;
     private int height;
     private boolean fullScreen;
+    private double graphicsScale;
     private String title;
     protected Window window;
     protected Renderer renderer;
@@ -27,19 +28,24 @@ public class BasicGame {
 
     private long lastUpdateTime;
 
-    public BasicGame(int width, int height, boolean fullScreen, String title) {
+    public BasicGame(int width, int height, double graphicsScale, boolean fullScreen, String title) {
         this.width = width;
         this.height = height;
         this.fullScreen = fullScreen;
         this.title = title;
+        this.graphicsScale = graphicsScale;
+    }
+
+    public BasicGame(int width, int height, double graphicsScale,  String title) {
+        this(width, height, graphicsScale, false, title);
     }
 
     public BasicGame(int width, int height, String title) {
-        this(width, height, false, title);
+        this(width, height, 1, false, title);
     }
 
     public BasicGame(String title) {
-        this(640, 480, false, title);
+        this(640, 480, title);
     }
 
     public void start() {
@@ -79,7 +85,7 @@ public class BasicGame {
         window.setVSyncEnabled(true);
 
         Logger.logInst("[Stardust] initialising renderer");
-        renderer = new Renderer(width, height, true);
+        renderer = new Renderer((int)(width*graphicsScale), (int)(height*graphicsScale), true);
         renderer.init();
         Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
         Logger.logInst("[Stardust] Initialising input");
@@ -99,8 +105,8 @@ public class BasicGame {
             //Check if window was resized
             if(window.wasResized()) {
                 window.updateViewport();
-                renderer.setWidth(window.getWidth());
-                renderer.setHeight(window.getHeight());
+                renderer.setWidth((int)(window.getWidth()*graphicsScale));
+                renderer.setHeight((int)(window.getHeight()*graphicsScale));
             }
 
             //Calculate delta
