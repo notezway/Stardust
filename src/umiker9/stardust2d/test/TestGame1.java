@@ -42,7 +42,7 @@ public class TestGame1 extends BasicGame {
                 rotation += delta/(double)Stardust2D.timePrecission*40;
             }
         };
-        testSprite.setOriginX(testSprite.getWidth()/2);
+        testSprite.setOriginX(0);
         testSprite.setOriginY(testSprite.getWidth()/2);
         testSprite.setRotation(10);
         mainScene.add(testSprite);
