@@ -25,47 +25,47 @@ public class Window {
         Display.create();
     }
 
-    public static int getX() {
+    public int getX() {
         return Display.getX();
     }
 
-    public static int getY() {
+    public int getY() {
         return Display.getY();
     }
 
-    public static int getWidth() {
+    public int getWidth() {
         return Display.getWidth();
     }
 
-    public static int getHeight() {
+    public int getHeight() {
         return Display.getHeight();
     }
 
-    public static void destroy() {
+    public void destroy() {
         Display.destroy();
     }
 
-    public static int setIcon(ByteBuffer[] icons) {
+    public int setIcon(ByteBuffer[] icons) {
         return Display.setIcon(icons);
     }
 
-    public static void setResizable(boolean resizable) {
+    public void setResizable(boolean resizable) {
         Display.setResizable(resizable);
     }
 
-    public static boolean isResizable() {
+    public boolean isResizable() {
         return Display.isResizable();
     }
 
-    public static void update() {
+    public void update() {
         Display.update();
     }
 
-    public static void sync(int fps) {
+    public void sync(int fps) {
         Display.sync(fps);
     }
 
-    public static boolean isCloseRequested() {
+    public boolean isCloseRequested() {
         return Display.isCloseRequested();
     }
 
@@ -73,19 +73,19 @@ public class Window {
         Display.setTitle(title);
     }
 
-    public static String getTitle() {
+    public String getTitle() {
         return Display.getTitle();
     }
 
-    public static boolean isFullscreen() {
+    public boolean isFullscreen() {
         return Display.isFullscreen();
     }
 
-    public static void setFullscreen(boolean fullscreen) throws LWJGLException {
+    public void setFullscreen(boolean fullscreen) throws LWJGLException {
         Display.setFullscreen(fullscreen);
     }
 
-    public static void setVSyncEnabled(boolean sync) {
+    public void setVSyncEnabled(boolean sync) {
         Display.setVSyncEnabled(sync);
     }
 
