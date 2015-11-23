@@ -1,5 +1,9 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
+import umiker9.stardust2d.systems.log.LogLevel;
+import umiker9.stardust2d.systems.log.Logger;
+import umiker9.stardust2d.systems.log.Message;
+
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -79,6 +83,23 @@ public class Renderer {
         glVertex2f(x + width, y + height);
         glVertex2f(x, y + height);
         glEnd();
+    }
+
+    public void drawTexturedQuad(int x, int y, int width, int height, Texture2D tex) {
+        tex.bind();
+        glBegin(GL_QUADS);
+        glTexCoord2f(1, 1); glVertex2f(x, y);
+        glTexCoord2f(-1, 1); glVertex2f(x + width, y);
+        glTexCoord2f(-1, -1); glVertex2f(x + width, y + height);
+        glTexCoord2f(1, -1); glVertex2f(x, y + height);
+        glEnd();
+    }
+
+    public void drawRotTexQuad(int x, int y, int width, int height, float rot, Texture2D tex) {
+        glPushMatrix();
+        glRotatef(rot, 1, 1, 0);
+        drawTexturedQuad(x, y, width, height, tex);
+        glPopMatrix();
     }
 
 
