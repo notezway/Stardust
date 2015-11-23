@@ -1,5 +1,7 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
+import umiker9.stardust2d.graphics.Color;
+
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -140,5 +142,9 @@ public class Renderer {
         glEnd();
     }
 
-    //So many of them
+    //Other functions
+
+    public void setColor(Color color) {
+        glColor4d(color.getDR(), color.getDG(), color.getDB(), color.getDA());
+    }
 }
