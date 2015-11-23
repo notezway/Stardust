@@ -1,6 +1,8 @@
 package umiker9.stardust2d;
 
+import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.graphics.lwjgl2.Texture;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 
 /**
@@ -15,6 +17,7 @@ public class Sprite extends GameObject {
     protected double originY;
     protected double rotation;
     protected Texture2D texture;
+    protected Color color = Color.WHITE;
 
     public Sprite() {
 
@@ -40,9 +43,17 @@ public class Sprite extends GameObject {
 
     @Override
     public void render(Renderer renderer) {
+        renderer.setColor(color);
+
         renderer.pushMatrix();
         renderer.translate(x, y);
         renderer.rotate(rotation);
+
+        if (texture != null && texture.isInitialized()) {
+            texture.bind();
+        } else {
+            Texture.none.bind();
+        }
 
         renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
 
@@ -116,5 +127,13 @@ public class Sprite extends GameObject {
 
     public void setTexture(Texture2D texture) {
         this.texture = texture;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
