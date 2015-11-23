@@ -45,7 +45,7 @@ public class Sprite extends GameObject {
         renderer.translate(x, y);
         renderer.rotate(rotation);
 
-        renderer.drawQuad(-originX, -originY, width, height);
+        renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
 
         renderer.popMatrix();
     }

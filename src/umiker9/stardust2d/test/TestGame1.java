@@ -30,7 +30,7 @@ public class TestGame1 extends BasicGame {
     protected void init() {
         super.init();
 
-        Texture2D texture = TextureLoader.loadTexture(FileIO.loadResource("Assets/grid.png"));
+        Texture2D texture = TextureLoader.loadTexture(FileIO.loadResource("Assets/texture.png"));
 
         mainScene = new Scene();
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
