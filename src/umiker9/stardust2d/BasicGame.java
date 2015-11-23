@@ -1,17 +1,15 @@
 package umiker9.stardust2d;
 
-import umiker9.stardust2d.graphics.lwjgl2.Renderer;
-import umiker9.stardust2d.graphics.lwjgl2.Window;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import umiker9.stardust2d.systems.error.Error;
-import umiker9.stardust2d.systems.error.ErrorBuilder;
+import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
-import umiker9.stardust2d.systems.log.LogLevel;
 import umiker9.stardust2d.systems.log.Logger;
-import umiker9.stardust2d.systems.log.Message;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * Created by miker9 on 22/11/2015.
@@ -71,7 +69,7 @@ public class BasicGame {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
             e.printStackTrace();
-            Logger.logInst("[Stardust] Error during LWJGL initialisation. Exiting..");
+            Logger.warnInst("[Stardust] Error during LWJGL initialisation. Exiting..");
             exit(1);
         }
         window.setTitle(title);
@@ -90,7 +88,7 @@ public class BasicGame {
         while (!window.isCloseRequested()) {
 
             while(ErrorStack.hasErrors()) {
-                Logger.logInst("[Stardust] " + ErrorStack.getNextError());
+                Logger.warnInst("[Stardust] " + ErrorStack.getNextError());
             }
 
 
@@ -128,7 +126,7 @@ public class BasicGame {
         if(errorCode == 0) {
             Logger.logInst("[Stardust] Exiting with no errors");
         } else {
-            Logger.logInst("[Stardust] Exiting with error code: " + errorCode);
+            Logger.warnInst("[Stardust] Exiting with error code: " + errorCode);
         }
         System.exit(errorCode);
     }

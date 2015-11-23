@@ -45,6 +45,18 @@ public class Logger {
         currLevel = defaultLevel;
     }
 
+    public void warn(String text) {
+        log(new Message(LogLevel.WARNING, text));
+    }
+
+    public void debug(String text) {
+        log(new Message(LogLevel.DEBUG, text));
+    }
+
+    public void info(String text) {
+        log(new Message(LogLevel.INFO, text));
+    }
+
     public void setLevel(LogLevel level) {
         currLevel = level;
     }
@@ -99,5 +111,17 @@ public class Logger {
 
     public static Message newWarn(String text) {
         return new Message(LogLevel.WARNING, text);
+    }
+
+    public static void warnInst(String text) {
+        instance.log(new Message(LogLevel.WARNING, text));
+    }
+
+    public static void debugInst(String text) {
+        instance.log(new Message(LogLevel.DEBUG, text));
+    }
+
+    public static void infoInst(String text) {
+        instance.log(new Message(LogLevel.INFO, text));
     }
 }
