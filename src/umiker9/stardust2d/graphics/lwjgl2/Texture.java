@@ -1,11 +1,8 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
 import org.lwjgl.opengl.GL13;
-import umiker9.stardust2d.graphics.lwjgl2.GLObject;
 
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glDeleteTextures;
-import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Texture implements GLObject {
     public static final Texture none = new Texture2D(0);

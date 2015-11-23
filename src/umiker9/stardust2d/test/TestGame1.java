@@ -1,8 +1,8 @@
 package umiker9.stardust2d.test;
 
 import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.Sprite;
 import umiker9.stardust2d.Scene;
+import umiker9.stardust2d.Sprite;
 import umiker9.stardust2d.Stardust2D;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;

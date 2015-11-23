@@ -6,9 +6,6 @@ import org.lwjgl.opengl.DisplayMode;
 
 import java.nio.ByteBuffer;
 
-import static org.lwjgl.opengl.GL11.GL_VERSION;
-import static org.lwjgl.opengl.GL11.glGetString;
-
 /**
  * Created by miker9 on 22/11/2015.
  */
