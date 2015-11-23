@@ -1,6 +1,8 @@
 package umiker9.stardust2d;
 
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.graphics.lwjgl2.Texture;
+import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 
 /**
  * Created by miker9 on 23/11/2015.
@@ -13,12 +15,28 @@ public class Sprite extends GameObject {
     protected double originX;
     protected double originY;
     protected double rotation;
+    protected Texture2D texture;
 
-    public Sprite(double x, double y, double width, double height) {
+    public Sprite() {
+
+    }
+
+    public Sprite(Texture2D texture) {
+        this(texture, 0, 0, texture.getWidth(), texture.getHeight());
+    }
+
+    public Sprite(Texture2D texture, double x, double y) {
+        this(texture, x, y, texture.getWidth(), texture.getHeight());
+    }
+
+    public Sprite(Texture2D texture, double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.originX = width/2;
+        this.originY = height/2;
+        this.texture = texture;
     }
 
     @Override
@@ -27,7 +45,7 @@ public class Sprite extends GameObject {
         renderer.translate(x, y);
         renderer.rotate(rotation);
 
-        renderer.drawQuad(-originX, -originY, width, height);
+        renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
 
         renderer.popMatrix();
     }
@@ -91,5 +109,13 @@ public class Sprite extends GameObject {
 
     public void setRotation(double rotation) {
         this.rotation = rotation;
+    }
+
+    public Texture2D getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture2D texture) {
+        this.texture = texture;
     }
 }
