@@ -33,7 +33,7 @@ public class Logger {
     }
 
     public void log(Message message) {
-        if(message.getLevel().ordinal() >= minLevel) {
+        if(message.getLevel().ordinal() >= minLevel || message.getLevel().equals(defaultLevel)) {
             for (PrintStream ps : out) {
                 ps.println(message.toString());
             }
@@ -89,19 +89,15 @@ public class Logger {
         return instance;
     }
 
+    public static Message newDebug(String text) {
+        return new Message(LogLevel.DEBUG, text);
+    }
+
     public static Message newInfo(String text) {
         return new Message(LogLevel.INFO, text);
     }
 
     public static Message newWarn(String text) {
         return new Message(LogLevel.WARNING, text);
-    }
-
-    public static Message newError(String text) {
-        return new Message(LogLevel.ERROR, text);
-    }
-
-    public static Message newCritError(String text) {
-        return new Message(LogLevel.CRITICAL_ERROR, text);
     }
 }

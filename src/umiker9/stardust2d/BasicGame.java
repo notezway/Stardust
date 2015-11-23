@@ -57,7 +57,6 @@ public class BasicGame {
         if(!success) {
             Logger.createDefaultInstance();
         }
-        Logger.setDefaultLevelInst(LogLevel.INFO);
         Logger.logInst("[Stardust] " + Stardust2D.getName() + " " + Stardust2D.getVersion());
 
         init();
@@ -71,7 +70,7 @@ public class BasicGame {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
             e.printStackTrace();
-            Logger.logInst(Logger.newCritError("[Stardust] Error during LWJGL initialisation. Exiting.."));
+            Logger.logInst(Logger.newWarn("[Stardust] Error during LWJGL initialisation. Exiting.."));
             exit(1);
         }
         window.setTitle(title);
@@ -91,7 +90,7 @@ public class BasicGame {
         while (!Window.isCloseRequested()) {
 
             while(ErrorStack.hasErrors()) {
-                Logger.logInst(LogLevel.ERROR + "[Stardust] " + ErrorStack.getNextError());
+                Logger.logInst(LogLevel.WARNING + "[Stardust] " + ErrorStack.getNextError());
             }
 
 
@@ -129,7 +128,7 @@ public class BasicGame {
         if(errorCode == 0) {
             Logger.logInst("[Stardust] Exiting with no errors");
         } else {
-            Logger.logInst(new Message(LogLevel.ERROR, "[Stardust] Exiting with error code " + errorCode));
+            Logger.logInst(new Message(LogLevel.WARNING, "[Stardust] Exiting with error code " + errorCode));
         }
         System.exit(errorCode);
     }
