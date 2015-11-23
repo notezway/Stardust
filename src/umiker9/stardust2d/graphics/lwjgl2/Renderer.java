@@ -145,6 +145,6 @@ public class Renderer {
     //Other functions
 
     public void setColor(Color color) {
-        glColor4d(color.getDR(), color.getDG(), color.getDB(), color.getDA());
+        glColor4d(color.getR(), color.getG(), color.getB(), color.getA());
     }
 }
