@@ -1,5 +1,7 @@
 package umiker9.stardust2d.graphics;
 
+import umiker9.stardust2d.util.math.MathUtil;
+
 /**
  * Created by Notezway on 23.11.2015.
  */
@@ -23,6 +25,14 @@ public class Color {
         set(r, g, b, a);
     }
 
+    public Color(int data) {
+        set(data);
+    }
+
+    public Color(long data) {
+        set(data);
+    }
+
     public Color set(double r, double g, double b, double a) {
         this.r = r;
         this.g = g;
@@ -36,6 +46,24 @@ public class Color {
         this.g = g/255.;
         this.b = b/255.;
         this.a = a/255.;
+        return this;
+    }
+
+    public Color set(int data) {
+        double[] comp = getComponents(data);
+        this.r = comp[0];
+        this.g = comp[1];
+        this.b = comp[2];
+        this.a = comp[3];
+        return this;
+    }
+
+    public Color set(long data) {
+        double[] comp = getComponents(data);
+        this.r = comp[0];
+        this.g = comp[1];
+        this.b = comp[2];
+        this.a = comp[3];
         return this;
     }
 
@@ -76,36 +104,35 @@ public class Color {
     }
 
     public Color mix(Color c) {
-        this.r = r + c.r;
-        this.g = g + c.g;
-        this.b = b + c.b;
-        this.a = a + c.a;
+        this.r = MathUtil.clamp(0, r + c.r, 1);
+        this.g = MathUtil.clamp(0, g + c.g, 1);
+        this.b = MathUtil.clamp(0, b + c.b, 1);
+        this.a = MathUtil.clamp(0, a + c.a, 1);
         return this;
     }
 
-    public static int getData(int r, int g, int b, int a) {
-        return r << 24 | g << 16 | b << 8 | a;
-    }
-
-    public static int getData(double r, double g, double b, double a) {
-        return (int)(r * 255) << 24 | (int)(g * 255) << 16 | (int)(b * 255) << 8 | (int)(a * 255);
-    }
-
-    public static int[] getIntComponents(int color) {
-        return new int[] {
-                (color & 0xFF000000) >> 24,
-                (color & 0x00FF0000) >> 16,
-                (color & 0x0000FF00) >> 8,
-                (color & 0x000000FF)
-        };
+    public long toLong() {
+        return  ((long)(r*0xFFFF)) << 48 |
+                ((long)(g*0xFFFF)) << 32 |
+                ((long)(b*0xFFFF)) << 16 |
+                ((long)(a*0xFFFF));
     }
 
     public static double[] getComponents(int color) {
         return new double[] {
-                ((color & 0xFF000000) >> 24) /255.,
-                ((color & 0x00FF0000) >> 16) /255.,
-                ((color & 0x0000FF00) >> 8)  /255.,
-                ((color & 0x000000FF))       /255.
+                ((color & 0xFF000000) >> 24) /(double)0xFF,
+                ((color & 0x00FF0000) >> 16) /(double)0xFF,
+                ((color & 0x0000FF00) >> 8)  /(double)0xFF,
+                ((color & 0x000000FF))       /(double)0xFF
+        };
+    }
+
+    public static double[] getComponents(long color) {
+        return new double[] {
+                ((color & 0xFFFF000000000000L) >> 48) /(double)0xFFFF,
+                ((color & 0x0000FFFF00000000L) >> 32) /(double)0xFFFF,
+                ((color & 0x00000000FFFF0000L) >> 16) /(double)0xFFFF,
+                ((color & 0x000000000000FFFFL))       /(double)0xFFFF
         };
     }
 
