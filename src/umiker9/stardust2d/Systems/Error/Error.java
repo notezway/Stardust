@@ -1,4 +1,4 @@
-package umiker9.stardust2d.Systems.Error;
+package umiker9.stardust2d.systems.error;
 
 /**
  * Created by miker9 on 22/11/2015.

@@ -1,4 +1,4 @@
-package umiker9.stardust2d.Systems.Error;
+package umiker9.stardust2d.systems.error;
 
 import java.util.Arrays;
 

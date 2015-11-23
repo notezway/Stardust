@@ -1,4 +1,4 @@
-package umiker9.stardust2d.Systems.Log;
+package umiker9.stardust2d.systems.log;
 
 import java.io.PrintStream;
 

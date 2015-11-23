@@ -1,4 +1,4 @@
-package umiker9.stardust2d.Graphics.LWJGL2;
+package umiker9.stardust2d.graphics.lwjgl2;
 
 import static org.lwjgl.opengl.GL11.*;
 

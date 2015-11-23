@@ -1,15 +1,15 @@
 package umiker9.stardust2d;
 
-import umiker9.stardust2d.Graphics.LWJGL2.Renderer;
-import umiker9.stardust2d.Graphics.LWJGL2.Window;
+import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.graphics.lwjgl2.Window;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import umiker9.stardust2d.Systems.Error.Error;
-import umiker9.stardust2d.Systems.Error.ErrorBuilder;
-import umiker9.stardust2d.Systems.Error.ErrorStack;
-import umiker9.stardust2d.Systems.Log.LogLevel;
-import umiker9.stardust2d.Systems.Log.Logger;
-import umiker9.stardust2d.Systems.Log.Message;
+import umiker9.stardust2d.systems.error.Error;
+import umiker9.stardust2d.systems.error.ErrorBuilder;
+import umiker9.stardust2d.systems.error.ErrorStack;
+import umiker9.stardust2d.systems.log.LogLevel;
+import umiker9.stardust2d.systems.log.Logger;
+import umiker9.stardust2d.systems.log.Message;
 
 import java.io.*;
 
@@ -85,9 +85,8 @@ public class BasicGame {
 
     protected void run() {
         lastUpdateTime = System.nanoTime();
-        ErrorStack.addError(new ErrorBuilder().setLevel(Error.CRITICAL_ERROR).setMessage("Test").finish());
 
-        while (!Window.isCloseRequested()) {
+        while (!window.isCloseRequested()) {
 
             while(ErrorStack.hasErrors()) {
                 Logger.logInst(LogLevel.WARNING + "[Stardust] " + ErrorStack.getNextError());

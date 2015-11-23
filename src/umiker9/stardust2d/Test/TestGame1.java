@@ -1,7 +1,7 @@
 package umiker9.stardust2d.Test;
 
 import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.Graphics.LWJGL2.Renderer;
+import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.Scene;
 import umiker9.stardust2d.Stardust2D;
 
