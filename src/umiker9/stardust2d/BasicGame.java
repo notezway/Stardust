@@ -91,8 +91,7 @@ public class BasicGame {
         while (!Window.isCloseRequested()) {
 
             while(ErrorStack.hasErrors()) {
-                Logger.setLevelInst(LogLevel.ERROR);
-                Logger.logInst("[Stardust] " + ErrorStack.getNextError());
+                Logger.logInst(LogLevel.ERROR + "[Stardust] " + ErrorStack.getNextError());
             }
 
 
