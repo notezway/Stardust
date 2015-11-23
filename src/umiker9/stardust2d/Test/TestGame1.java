@@ -1,4 +1,4 @@
-package umiker9.stardust2d.Test;
+package umiker9.stardust2d.test;
 
 import umiker9.stardust2d.BasicGame;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
