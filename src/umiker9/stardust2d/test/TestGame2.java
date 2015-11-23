@@ -35,7 +35,6 @@ public class TestGame2 extends BasicGame {
             @Override
             public void render(Renderer renderer) {
                 super.render(renderer);
-                renderer.drawRotTexQuad(100 + i[0], (int) (100 + 20*Math.sin(i[0]/5./i[1])), 50, 50, (float) (0), tex);
             }
 
             @Override

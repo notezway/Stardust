@@ -110,7 +110,6 @@ public class Renderer {
         glScaled(x, y, 1);
     }
 
-
     //Draw functions
 
     public void clearScreen() {
@@ -135,14 +134,6 @@ public class Renderer {
         glTexCoord2f(1, -1); glVertex2f(x, y + height);
         glEnd();
     }
-
-    public void drawRotTexQuad(int x, int y, int width, int height, float rot, Texture2D tex) {
-        glPushMatrix();
-        glRotatef(rot, 1, 1, 0);
-        drawTexturedQuad(x, y, width, height, tex);
-        glPopMatrix();
-    }
-
 
     //So many of them
 }

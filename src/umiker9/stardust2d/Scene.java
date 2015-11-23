@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by miker9 on 22/11/2015.
  */
+
 public class Scene {
     protected List<GameObject> actors = new ArrayList<>();
 
