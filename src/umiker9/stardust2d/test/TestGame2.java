@@ -25,7 +25,7 @@ public class TestGame2 extends BasicGame {
 
     protected void init() {
         super.init();
-        String path = "res/Assets/jackal.png";
+        String path = "Assets/jackal.png";
         tex = TextureLoader.loadTexture(new Resource(path, FileIO.getFileAsBytes(path)));
     }
 
