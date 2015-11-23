@@ -5,6 +5,7 @@ import org.lwjgl.opengl.Display;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
+import umiker9.stardust2d.systems.io.HID.InputManager;
 import umiker9.stardust2d.systems.log.Logger;
 
 import java.io.File;
@@ -15,13 +16,14 @@ import java.io.PrintStream;
  * Created by miker9 on 22/11/2015.
  */
 public class BasicGame {
-    protected int width;
-    protected int height;
-    protected boolean fullScreen;
-    protected String title;
+    private int width;
+    private int height;
+    private boolean fullScreen;
+    private String title;
     protected Window window;
     protected Renderer renderer;
     protected Scene currentScene;
+    protected InputManager inputManager;
 
     private long lastUpdateTime;
 
@@ -65,6 +67,7 @@ public class BasicGame {
 
     protected void init() {
         Logger.logInst("[Stardust] Initialising display");
+
         try {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
@@ -79,6 +82,8 @@ public class BasicGame {
         renderer = new Renderer(width, height, true);
         renderer.init();
         Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
+        Logger.logInst("[Stardust] Initialising input");
+        inputManager = new InputManager();
         Logger.logInst("[Stardust] Engine initialisation is finished");
     }
 
@@ -86,21 +91,31 @@ public class BasicGame {
         lastUpdateTime = System.nanoTime();
 
         while (!window.isCloseRequested()) {
-
+            //Handle errors
             while(ErrorStack.hasErrors()) {
                 Logger.warnInst("[Stardust] " + ErrorStack.getNextError());
             }
 
+            //Check if window was resized
+            if(window.wasResized()) {
+                window.updateViewport();
+                renderer.setWidth(window.getWidth());
+                renderer.setHeight(window.getHeight());
+            }
 
+            //Calculate delta
             long currentTime = System.nanoTime();
             long delta = currentTime - lastUpdateTime;
             lastUpdateTime = currentTime;
 
+            //Handle input
+            inputManager.handleInput();
 
-
-            //handle input
+            //Update and render
             update(delta);
             render();
+
+            //Update display
             Display.update();
         }
     }

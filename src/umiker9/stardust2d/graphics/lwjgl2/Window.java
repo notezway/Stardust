@@ -3,6 +3,7 @@ package umiker9.stardust2d.graphics.lwjgl2;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
 
@@ -76,6 +77,14 @@ public class Window {
 
     public boolean isFullscreen() {
         return Display.isFullscreen();
+    }
+
+    public boolean wasResized() {
+        return Display.wasResized();
+    }
+
+    public void updateViewport() {
+        GL11.glViewport(0, 0, getWidth(), getHeight());
     }
 
     public void setFullscreen(boolean fullscreen) throws LWJGLException {
