@@ -1,9 +1,5 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
-import umiker9.stardust2d.systems.log.LogLevel;
-import umiker9.stardust2d.systems.log.Logger;
-import umiker9.stardust2d.systems.log.Message;
-
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -125,13 +121,15 @@ public class Renderer {
         glEnd();
     }
 
-    public void drawTexturedQuad(int x, int y, int width, int height, Texture2D tex) {
+    public void drawTexturedQuad(double x, double y, double width, double height, Texture2D tex) {
         tex.bind();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glBegin(GL_QUADS);
-        glTexCoord2f(1, 1); glVertex2f(x, y);
-        glTexCoord2f(-1, 1); glVertex2f(x + width, y);
-        glTexCoord2f(-1, -1); glVertex2f(x + width, y + height);
-        glTexCoord2f(1, -1); glVertex2f(x, y + height);
+        glTexCoord2d(0, 0); glVertex2d(x, y);
+        glTexCoord2d(1, 0); glVertex2d(x + width, y);
+        glTexCoord2d(1, 1); glVertex2d(x + width, y + height);
+        glTexCoord2d(0, 1); glVertex2d(x, y + height);
         glEnd();
     }
 
