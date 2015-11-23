@@ -1,6 +1,6 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 
 public class Texture2D extends Texture {
 

@@ -5,6 +5,7 @@ import org.lwjgl.opengl.Display;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
+import umiker9.stardust2d.systems.io.HID.InputManager;
 import umiker9.stardust2d.systems.log.Logger;
 
 import java.io.File;
@@ -15,29 +16,36 @@ import java.io.PrintStream;
  * Created by miker9 on 22/11/2015.
  */
 public class BasicGame {
-    protected int width;
-    protected int height;
-    protected boolean fullScreen;
-    protected String title;
+    private int width;
+    private int height;
+    private boolean fullScreen;
+    private double graphicsScale;
+    private String title;
     protected Window window;
     protected Renderer renderer;
     protected Scene currentScene;
+    protected InputManager inputManager;
 
     private long lastUpdateTime;
 
-    public BasicGame(int width, int height, boolean fullScreen, String title) {
+    public BasicGame(int width, int height, double graphicsScale, boolean fullScreen, String title) {
         this.width = width;
         this.height = height;
         this.fullScreen = fullScreen;
         this.title = title;
+        this.graphicsScale = graphicsScale;
+    }
+
+    public BasicGame(int width, int height, double graphicsScale,  String title) {
+        this(width, height, graphicsScale, false, title);
     }
 
     public BasicGame(int width, int height, String title) {
-        this(width, height, false, title);
+        this(width, height, 1, false, title);
     }
 
     public BasicGame(String title) {
-        this(640, 480, false, title);
+        this(640, 480, title);
     }
 
     public void start() {
@@ -65,6 +73,7 @@ public class BasicGame {
 
     protected void init() {
         Logger.logInst("[Stardust] Initialising display");
+
         try {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
@@ -76,9 +85,11 @@ public class BasicGame {
         window.setVSyncEnabled(true);
 
         Logger.logInst("[Stardust] initialising renderer");
-        renderer = new Renderer(width, height, true);
+        renderer = new Renderer((int)(width*graphicsScale), (int)(height*graphicsScale), true);
         renderer.init();
         Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
+        Logger.logInst("[Stardust] Initialising input");
+        inputManager = new InputManager();
         Logger.logInst("[Stardust] Engine initialisation is finished");
     }
 
@@ -86,21 +97,31 @@ public class BasicGame {
         lastUpdateTime = System.nanoTime();
 
         while (!window.isCloseRequested()) {
-
+            //Handle errors
             while(ErrorStack.hasErrors()) {
                 Logger.warnInst("[Stardust] " + ErrorStack.getNextError());
             }
 
+            //Check if window was resized
+            if(window.wasResized()) {
+                window.updateViewport();
+                renderer.setWidth((int)(window.getWidth()*graphicsScale));
+                renderer.setHeight((int)(window.getHeight()*graphicsScale));
+            }
 
+            //Calculate delta
             long currentTime = System.nanoTime();
             long delta = currentTime - lastUpdateTime;
             lastUpdateTime = currentTime;
 
+            //Handle input
+            inputManager.handleInput();
 
-
-            //handle input
+            //Update and render
             update(delta);
             render();
+
+            //Update display
             Display.update();
         }
     }
