@@ -32,11 +32,17 @@ public class Renderer {
     }
 
     public void updateMatrices() {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
         if(invertYAxis) {
             glOrtho(0, width, height, 0, 0, 1);
         } else {
             glOrtho(0, width, 0, height, 0, 1);
         }
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
     }
 
     public int getWidth() {
@@ -70,18 +76,53 @@ public class Renderer {
         return glGetString(GL_VERSION);
     }
 
+    //matrix functions
+
+    public void pushMatrix() {
+        glPushMatrix();
+    }
+
+    public void popMatrix() {
+        glPopMatrix();
+    }
+
+    public void translate(double x, double y) {
+        translate(x, y, 0);
+    }
+
+    public void translate(double x, double y, double z) {
+        glTranslated(x, y, z);
+    }
+
+    public void rotate(double angle) {
+        rotate(angle, 0, 0, 1);
+    }
+
+    public void rotate(double angle, double x, double y, double z) {
+        if(invertYAxis) {
+            glRotated(angle, x, y, -z);
+        } else {
+            glRotated(angle, x, y, z);
+        }
+    }
+
+    public void scale(double x, double y) {
+        glScaled(x, y, 1);
+    }
+
+
     //Draw functions
 
     public void clearScreen() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void drawQuad(int x, int y, int width, int height) {
+    public void drawQuad(double x, double y, double width, double height) {
         glBegin(GL_QUADS);
-        glVertex2f(x, y);
-        glVertex2f(x + width, y);
-        glVertex2f(x + width, y + height);
-        glVertex2f(x, y + height);
+        glVertex2d(x, y);
+        glVertex2d(x + width, y);
+        glVertex2d(x + width, y + height);
+        glVertex2d(x, y + height);
         glEnd();
     }
 
