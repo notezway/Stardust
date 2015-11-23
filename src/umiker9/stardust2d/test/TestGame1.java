@@ -30,6 +30,8 @@ public class TestGame1 extends BasicGame {
     protected void init() {
         super.init();
 
+        renderer.setInvertYAxis(false);
+
         Texture2D texture = TextureLoader.loadTexture(FileIO.loadResource("Assets/jackal.png"));
 
         mainScene = new Scene();
@@ -40,11 +42,12 @@ public class TestGame1 extends BasicGame {
 
                 x += delta/(double)Stardust2D.timePrecission*100;
                 rotation += delta/(double)Stardust2D.timePrecission*40;
+
             }
         };
         testSprite.setOriginX(0);
         testSprite.setOriginY(testSprite.getWidth()/2);
-        testSprite.setRotation(10);
+        testSprite.setRotation(0);
         mainScene.add(testSprite);
         setCurrentScene(mainScene);
     }

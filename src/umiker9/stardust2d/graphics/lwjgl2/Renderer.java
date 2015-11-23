@@ -21,7 +21,6 @@ public class Renderer {
     }
 
     public void init() {
-        glClearColor(1, 0, 0, 0);
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -126,10 +125,18 @@ public class Renderer {
     public void drawTexturedQuad(double x, double y, double width, double height, Texture2D tex) {
         tex.bind();
         glBegin(GL_QUADS);
-        glTexCoord2d(0, 0); glVertex2d(x, y);
-        glTexCoord2d(1, 0); glVertex2d(x + width, y);
-        glTexCoord2d(1, 1); glVertex2d(x + width, y + height);
-        glTexCoord2d(0, 1); glVertex2d(x, y + height);
+
+        if(invertYAxis) {
+            glTexCoord2d(0, 0); glVertex2d(x, y);
+            glTexCoord2d(1, 0); glVertex2d(x + width, y);
+            glTexCoord2d(1, 1); glVertex2d(x + width, y + height);
+            glTexCoord2d(0, 1); glVertex2d(x, y + height);
+        } else {
+            glTexCoord2d(0, 1); glVertex2d(x, y);
+            glTexCoord2d(1, 1); glVertex2d(x + width, y);
+            glTexCoord2d(1, 0); glVertex2d(x + width, y + height);
+            glTexCoord2d(0, 0); glVertex2d(x, y + height);
+        }
         glEnd();
     }
 
