@@ -111,6 +111,13 @@ public class Color {
         return this;
     }
 
+    public int toInt() {
+        return  ((int)(r*0xFF)) << 24 |
+                ((int)(g*0xFF)) << 16 |
+                ((int)(b*0xFF)) << 8 |
+                ((int)(a*0xFF));
+    }
+
     public long toLong() {
         return  ((long)(r*0xFFFF)) << 48 |
                 ((long)(g*0xFFFF)) << 32 |
