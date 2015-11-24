@@ -48,11 +48,11 @@ public class FileIO {
         return null;
     }
 
-    public static Resource loadResource(String path) {
+    public static Resource getResource(String path) {
         return new Resource(path, getFileAsBytes(path));
     }
 
-    public static Resource loadResource(File file) {
+    public static Resource getResource(File file) {
         return new Resource(file.getPath(), getFileAsBytes(file));
     }
 
@@ -71,11 +71,8 @@ public class FileIO {
             return new File[0];
         }
 
-        return folder.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.toLowerCase().endsWith(suffix.toLowerCase());
-            }
+        return folder.listFiles((dir, name) -> {
+            return name.toLowerCase().endsWith(suffix.toLowerCase());
         });
     }
 }

@@ -11,6 +11,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 public class Sprite extends GameObject {
     protected double x;
     protected double y;
+    protected double depth;
     protected double width;
     protected double height;
     protected double originX;
@@ -41,12 +42,11 @@ public class Sprite extends GameObject {
         this.texture = texture;
     }
 
-    @Override
     public void render(Renderer renderer) {
         renderer.setColor(color);
 
         renderer.pushMatrix();
-        renderer.translate(x, y);
+        renderer.translate(x, y, -depth);
         renderer.rotate(rotation);
 
         if (texture != null && texture.isInitialized()) {
@@ -135,5 +135,13 @@ public class Sprite extends GameObject {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public double getDepth() {
+        return depth;
+    }
+
+    public void setDepth(double depth) {
+        this.depth = depth;
     }
 }

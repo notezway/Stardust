@@ -9,7 +9,6 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
 import umiker9.stardust2d.systems.io.HID.InputListener;
-import umiker9.stardust2d.systems.io.HID.InputManager;
 import umiker9.stardust2d.systems.io.HID.KeyboardEvent;
 
 /**
@@ -21,13 +20,13 @@ public class TestGame1 extends BasicGame {
 
     private Scene mainScene;
 
+    public TestGame1() {
+        super(800, 600, "Test game 1");
+    }
+
     public static void main(String args[]) {
         instance = new TestGame1();
         instance.start();
-    }
-
-    public TestGame1() {
-        super(800, 600, "Test game 1");
     }
 
     @Override
@@ -36,7 +35,8 @@ public class TestGame1 extends BasicGame {
 
         //renderer.setInvertYAxis(false);
 
-        Texture2D texture = TextureLoader.loadTexture(FileIO.loadResource("Assets/jackal.png"));
+        Texture2D texture = TextureLoader.loadTexture(FileIO.getResource("Assets/jackal.png"));
+        Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene();
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
@@ -49,8 +49,6 @@ public class TestGame1 extends BasicGame {
             }
         };
 
-        testSprite.setRotation(0);
-
         inputManager.addListener(new InputListener() {
             @Override
             public void onKeyboardKeyReleased(KeyboardEvent event) {
@@ -61,8 +59,12 @@ public class TestGame1 extends BasicGame {
             }
         });
 
+        Sprite bg = new Sprite(background, renderer.getWidth() / 2, renderer.getHeight() / 2);
+        bg.setDepth(1);
+        //bg.setColor(new Color(1, 1, 1, 0.8));
 
         mainScene.add(testSprite);
+        mainScene.add(bg);
         setCurrentScene(mainScene);
     }
 }
