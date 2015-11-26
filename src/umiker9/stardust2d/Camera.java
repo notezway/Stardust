@@ -22,16 +22,16 @@ public class Camera implements Updatable {
     }
 
     public void applyTransforms(Renderer renderer) {
-        renderer.rotate(-rotation);
-        renderer.translate(x + renderer.getWidth() / 2, y + renderer.getHeight() / 2);
+        renderer.translate(renderer.getWidth() / 2, renderer.getHeight() / 2);
         renderer.scale(scale, scale);
+        renderer.rotate(-rotation);
+        renderer.translate(-x, -y);
     }
 
 
     @Override
     public void update(long delta) {
-        //x+=0.005;
-        rotation += 0.2;
+
     }
 
     public double getRotation() {
