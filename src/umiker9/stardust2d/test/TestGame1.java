@@ -39,6 +39,7 @@ public class TestGame1 extends BasicGame {
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene();
+        Sprite testSprite2 = new Sprite(texture, 0, 0, 50, 50);
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
             @Override
             public void update(long delta) {
@@ -59,12 +60,13 @@ public class TestGame1 extends BasicGame {
             }
         });
 
-        Sprite bg = new Sprite(background, renderer.getWidth() / 2, renderer.getHeight() / 2);
+        Sprite bg = new Sprite(background);
         bg.setDepth(1);
         //bg.setColor(new Color(1, 1, 1, 0.8));
 
         mainScene.add(testSprite);
         mainScene.add(bg);
+        mainScene.add(testSprite2);
         setCurrentScene(mainScene);
     }
 }

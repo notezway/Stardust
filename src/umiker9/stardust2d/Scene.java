@@ -11,33 +11,42 @@ import java.util.List;
 
 public class Scene {
     protected List<GameObject> actors = new ArrayList<>();
-
+    protected Camera camera;
 
     public Scene() {
+        this(new Camera());
+    }
 
+    public Scene(Camera camera) {
+        this.camera = camera;
     }
 
     public void render(Renderer renderer) {
-
-        //Ахтунг КОСТЫЛИ
-        List<Sprite> sprites = new ArrayList<>();
+        //Find renderables and sort them by depth
+        List<Renderable> renderables = new ArrayList<>();
 
         for(GameObject actor : actors) {
-            if (actor instanceof Sprite) {
-                sprites.add((Sprite) actor);
+            if (actor instanceof Renderable) {
+                renderables.add((Sprite) actor);
             }
         }
 
-        sprites.sort((o1, o2) -> (int) (Integer.MAX_VALUE * (o2.getDepth() - o1.getDepth())));
+        renderables.sort((o1, o2) -> (int) (Integer.MAX_VALUE * (o2.getDepth() - o1.getDepth())));
 
-        //Конец костылей
+        //Apply camera
+        renderer.pushMatrix();
+        camera.applyTransforms(renderer);
 
-        for (Sprite sprite : sprites) {
-            sprite.render(renderer);
+        //render objects
+        for (Renderable renderable : renderables) {
+            renderable.render(renderer);
         }
+
+        renderer.popMatrix();
     }
 
     public void update(long delta) {
+        camera.update(delta);
         for(GameObject actor : actors) {
             actor.update(delta);
         }
@@ -50,6 +59,14 @@ public class Scene {
 
     public void remove(GameObject actor) {
         actors.remove(actor);
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     public List<GameObject> getActors() {

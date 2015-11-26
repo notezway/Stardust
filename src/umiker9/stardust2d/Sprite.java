@@ -8,7 +8,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 /**
  * Created by miker9 on 23/11/2015.
  */
-public class Sprite extends GameObject {
+public class Sprite extends GameObject implements Renderable {
     protected double x;
     protected double y;
     protected double depth;

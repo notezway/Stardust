@@ -3,10 +3,8 @@ package umiker9.stardust2d;
 /**
  * Created by miker9 on 23/11/2015.
  */
-public abstract class GameObject {
+public abstract class GameObject implements Updatable {
     protected Scene scene;
-
-    public abstract void update(long delta);
 
     public Scene getScene() {
         return scene;

@@ -1,14 +1,38 @@
 package umiker9.stardust2d;
 
+import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+
 /**
  * Created by miker9 on 23/11/2015.
  */
-public class Camera {
+public class Camera implements Updatable {
     protected double x;
     protected double y;
     protected double rotation;
     protected double scale;
 
+    public Camera() {
+        this(0, 0);
+    }
+
+    public Camera(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.scale = 1;
+    }
+
+    public void applyTransforms(Renderer renderer) {
+        renderer.rotate(-rotation);
+        renderer.translate(x + renderer.getWidth() / 2, y + renderer.getHeight() / 2);
+        renderer.scale(scale, scale);
+    }
+
+
+    @Override
+    public void update(long delta) {
+        //x+=0.005;
+        rotation += 0.2;
+    }
 
     public double getRotation() {
         return rotation;
