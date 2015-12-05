@@ -296,4 +296,36 @@ public class Collision2D {
         }
         return points.toArray(new Vec2[points.size()]);
     }
+
+    //============== Новый код
+
+    //Только с выпуклыми фигурами!
+    public static boolean isPointInsideShape(Vec2 point, Vec2 shift, Vec2... shape) {
+        int i = 1;
+        double A, B, C, f;
+        Vec2 p1, p2;
+        point = point.subtract(shift);
+        for(Vec2 shapePoint : shape) {
+            if(i == shape.length) i = 0;
+            p1 = shapePoint.subtract(shift);
+            p2 = shape[i].subtract(shift);
+            A = p1.getY() - p2.getY();
+            B = p2.getX() - p1.getX();
+            C = p1.getX() * p2.getY() - p2.getX() * p1.getY();
+            f = A*point.getX() + B*point.getY() + C;
+            if(f > 0) return false;
+        }
+        return true;
+    }
+
+    //Только с выпуклыми фигурами!
+    public static boolean isShapesIntersect(Vec2[] shape1, Vec2[] shape2, Vec2 shift) {
+        for(Vec2 point : shape1) {
+            if(isPointInsideShape(point, shift, shape2)) return true;
+        }
+        for(Vec2 point : shape2) {
+            if(isPointInsideShape(point, shift, shape1)) return true;
+        }
+        return false;
+    }
 }
