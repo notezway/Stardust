@@ -40,21 +40,21 @@ public class Logger {
         }
     }
 
-    public void log(String text) {
-        log(new Message(currLevel, text));
+    public void log(Object data) {
+        log(new Message(currLevel, data));
         currLevel = defaultLevel;
     }
 
-    public void warn(String text) {
-        log(new Message(LogLevel.WARNING, text));
+    public void warn(Object data) {
+        log(new Message(LogLevel.WARNING, data));
     }
 
-    public void debug(String text) {
-        log(new Message(LogLevel.DEBUG, text));
+    public void debug(Object data) {
+        log(new Message(LogLevel.DEBUG, data));
     }
 
-    public void info(String text) {
-        log(new Message(LogLevel.INFO, text));
+    public void info(Object data) {
+        log(new Message(LogLevel.INFO, data));
     }
 
     public void setLevel(LogLevel level) {
@@ -73,8 +73,8 @@ public class Logger {
         instance.log(message);
     }
 
-    public static void logInst(String text) {
-        instance.log(text);
+    public static void logInst(Object data) {
+        instance.log(data);
     }
 
     public static void setLevelInst(LogLevel level) {
@@ -101,24 +101,24 @@ public class Logger {
         return instance;
     }
 
-    public static Message newDebug(String text) {
-        return new Message(LogLevel.DEBUG, text);
+    public static Message newDebug(Object data) {
+        return new Message(LogLevel.DEBUG, data);
     }
 
-    public static Message newInfo(String text) {
-        return new Message(LogLevel.INFO, text);
+    public static Message newInfo(Object data) {
+        return new Message(LogLevel.INFO, data);
     }
 
-    public static Message newWarn(String text) {
-        return new Message(LogLevel.WARNING, text);
+    public static Message newWarn(Object data) {
+        return new Message(LogLevel.WARNING, data);
     }
 
-    public static void warnInst(String text) {
-        instance.log(new Message(LogLevel.WARNING, text));
+    public static void warnInst(Object data) {
+        instance.log(new Message(LogLevel.WARNING, data));
     }
 
-    public static void debugInst(String text) {
-        instance.log(new Message(LogLevel.DEBUG, text));
+    public static void debugInst(Object data) {
+        instance.log(new Message(LogLevel.DEBUG, data));
     }
 
     public static void infoInst(String text) {

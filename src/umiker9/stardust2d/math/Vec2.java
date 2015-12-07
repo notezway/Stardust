@@ -73,6 +73,15 @@ public class Vec2 extends Vector {
         return getX() * another.getX() + getY() * another.getY();
     }
 
+    public Vec2 rotate(double rad) {
+        double sin = Math.sin(rad);
+        double cos = Math.cos(rad);
+        return new Vec2(
+                getX() * cos - getY() * sin,
+                getX() * sin + getY() * cos
+        );
+    }
+
     public Vector2f asGLVector() {
         return new Vector2f((float)getX(), (float)getY());
     }

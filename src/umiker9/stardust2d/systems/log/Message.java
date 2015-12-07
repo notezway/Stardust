@@ -6,22 +6,22 @@ package umiker9.stardust2d.systems.log;
 public class Message {
 
     private LogLevel level;
-    private String text;
+    private Object data;
 
-    public Message(LogLevel level, String text) {
+    public Message(LogLevel level, Object data) {
         this.level = level;
-        this.text = text;
+        this.data = data;
     }
 
     public LogLevel getLevel() {
         return level;
     }
 
-    public String getText() {
-        return text;
+    public Object getData() {
+        return data;
     }
 
     public String toString() {
-        return "[" + level.toString() + "] " + text;
+        return "[" + level.toString() + "] " + data.toString();
     }
 }

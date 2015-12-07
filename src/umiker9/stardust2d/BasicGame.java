@@ -6,6 +6,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
 import umiker9.stardust2d.systems.io.HID.InputManager;
+import umiker9.stardust2d.systems.log.LogLevel;
 import umiker9.stardust2d.systems.log.Logger;
 
 import java.io.File;

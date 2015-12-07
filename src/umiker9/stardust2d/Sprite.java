@@ -49,15 +49,13 @@ public class Sprite extends GameObject implements Renderable {
         renderer.translate(x, y, -depth);
         renderer.rotate(rotation);
 
-        if (texture != null && texture.isInitialized()) {
-            texture.bind();
-        } else {
-            Texture.none.bind();
-        }
-
-        renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
+        draw(renderer);
 
         renderer.popMatrix();
+    }
+
+    public void draw(Renderer renderer) {
+        renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
     }
 
     @Override

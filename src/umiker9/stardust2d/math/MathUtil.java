@@ -7,6 +7,14 @@ package umiker9.stardust2d.math;
  */
 public class MathUtil {
 
+    public static double distance2Sq(double x1, double y1, double x2, double y2) {
+        return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+    }
+
+    public static double distance3Sq(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1);
+    }
+
     public static double distance2(double x1, double y1, double x2, double y2) {
         return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     }
@@ -66,6 +74,54 @@ public class MathUtil {
         ay = (Math.sin(adeg) * length);
 
         return new double[] {ax, ay};
+    }
+
+    public static double max(double... values) {
+        double max = Double.MIN_VALUE;
+        for(double v : values) {
+            max = Math.max(v, max);
+        }
+        return max;
+    }
+
+    public static double min(double... values) {
+        double min = Double.MAX_VALUE;
+        for(double v : values) {
+            min = Math.min(v, min);
+        }
+        return min;
+    }
+
+    public static double sum(double... values) {
+        double sum = 0;
+        for(double v : values) {
+            sum += v;
+        }
+        return sum;
+    }
+
+    public static double sumSq(double... values) {
+        double sum = 0;
+        for(double v : values) {
+            sum += v*v;
+        }
+        return sum;
+    }
+
+    public static double average(double... values) {
+        return sum(values) / values.length;
+    }
+
+    public static double product(double... values) {
+        double sum = 1;
+        for(double v : values) {
+            sum *= v;
+        }
+        return sum;
+    }
+
+    public static double geometricMean(double... values) {
+        return Math.pow(product(values), 1. / values.length);
     }
 
 }

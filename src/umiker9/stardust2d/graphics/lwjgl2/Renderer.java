@@ -126,8 +126,12 @@ public class Renderer {
         glEnd();
     }
 
-    public void drawTexturedQuad(double x, double y, double width, double height, Texture2D tex) {
-        tex.bind();
+    public void drawTexturedQuad(double x, double y, double width, double height, Texture2D texture) {
+        if (texture != null && texture.isInitialized()) {
+            texture.bind();
+        } else {
+            Texture.none.bind();
+        }
         glBegin(GL_QUADS);
 
         if(invertYAxis) {

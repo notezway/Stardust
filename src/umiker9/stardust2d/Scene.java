@@ -27,7 +27,7 @@ public class Scene {
 
         for(GameObject actor : actors) {
             if (actor instanceof Renderable) {
-                renderables.add((Sprite) actor);
+                renderables.add((Renderable) actor);
             }
         }
 
