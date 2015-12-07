@@ -1,7 +1,7 @@
-package umiker9.stardust2d.util.collision;
+package umiker9.stardust2d.math.collision;
 
 import org.lwjgl.opengl.GL11;
-import umiker9.stardust2d.util.math.Vec2;
+import umiker9.stardust2d.math.Vec2;
 
 /**
  * Created by slimon
@@ -38,6 +38,7 @@ public class AABB2D {
         update(new Vec2(minX, minY), new Vec2(maxX, maxY));
     }
 
+    @Deprecated
     public void draw() {
         GL11.glBegin(GL11.GL_LINE_LOOP);
         GL11.glVertex2d(pMax.getX(), pMax.getY());

@@ -8,7 +8,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
 import umiker9.stardust2d.systems.io.Resource;
-import umiker9.stardust2d.util.math.MathUtil;
+import umiker9.stardust2d.math.MathUtil;
 
 /**
  * Created by Notezway on 23.11.2015.

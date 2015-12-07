@@ -1,4 +1,4 @@
-package umiker9.stardust2d.util.math;
+package umiker9.stardust2d.math;
 
 public class Vector {
     protected double[] values;

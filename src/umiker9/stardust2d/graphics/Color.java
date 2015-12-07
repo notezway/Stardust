@@ -1,6 +1,6 @@
 package umiker9.stardust2d.graphics;
 
-import umiker9.stardust2d.util.math.MathUtil;
+import umiker9.stardust2d.math.MathUtil;
 
 /**
  * Created by Notezway on 23.11.2015.

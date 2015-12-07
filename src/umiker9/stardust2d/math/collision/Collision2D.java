@@ -1,7 +1,7 @@
-package umiker9.stardust2d.util.collision;
+package umiker9.stardust2d.math.collision;
 
-import umiker9.stardust2d.util.math.MathUtil;
-import umiker9.stardust2d.util.math.Vec2;
+import umiker9.stardust2d.math.MathUtil;
+import umiker9.stardust2d.math.Vec2;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -193,11 +193,6 @@ public class Collision2D {
         return Math.sqrt(getSqDistanceFromLineSegmentToPoint(lp1, lp2, p));
     }
 
-    public static boolean checkCirclesCollision(Vec2 o1, double r1, Vec2 o2, double r2) {
-        return (o1.getX() - o2.getX())*(o1.getX() - o2.getX()) + (o1.getY() - o2.getY())*(o1.getY() - o2.getY()) <= (r1 + r2)*(r1 + r2);
-    }
-
-
     //not working properly
     public static Vec2[] getCirclesCollision(Vec2 o1, double r1, Vec2 o2, double r2) {
         double ox = o2.getX() - o1.getX();
@@ -327,5 +322,9 @@ public class Collision2D {
             if(isPointInsideShape(point, shift, shape1)) return true;
         }
         return false;
+    }
+
+    public static boolean isCirclesIntersect(Vec2 o1, double r1, Vec2 o2, double r2) {
+        return (o1.getX() - o2.getX())*(o1.getX() - o2.getX()) + (o1.getY() - o2.getY())*(o1.getY() - o2.getY()) <= (r1 + r2)*(r1 + r2);
     }
 }
