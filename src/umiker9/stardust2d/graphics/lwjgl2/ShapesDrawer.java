@@ -1,9 +1,7 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
-import umiker9.stardust2d.CircleShape;
-import umiker9.stardust2d.graphics.Color;
+import umiker9.stardust2d.math.geometry.CircleShape;
 import umiker9.stardust2d.math.Vec2;
-import umiker9.stardust2d.systems.log.Logger;
 
 import static org.lwjgl.opengl.GL11.*;
 

@@ -2,9 +2,9 @@ package umiker9.stardust2d;
 
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.ShapesDrawer;
-import umiker9.stardust2d.graphics.lwjgl2.Texture;
-import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.math.Vec2;
+import umiker9.stardust2d.math.geometry.CircleShape;
+import umiker9.stardust2d.math.geometry.Shape;
 
 /**
  * Created by Notezway on 07.12.2015.

@@ -1,4 +1,4 @@
-package umiker9.stardust2d;
+package umiker9.stardust2d.math.geometry;
 
 import umiker9.stardust2d.math.Vec2;
 
