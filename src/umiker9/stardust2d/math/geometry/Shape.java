@@ -18,4 +18,6 @@ public abstract class Shape {
     public abstract void scale(double factor);
 
     public abstract void rotate(double rad);
+
+    public abstract boolean isCollide(Shape another, Vec2 pos1, Vec2 pos2);
 }

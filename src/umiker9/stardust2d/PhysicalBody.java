@@ -1,5 +1,6 @@
 package umiker9.stardust2d;
 
+import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.ShapesDrawer;
 import umiker9.stardust2d.math.Vec2;
@@ -11,7 +12,7 @@ import umiker9.stardust2d.math.geometry.Shape;
  */
 public abstract class PhysicalBody extends Sprite {
 
-    protected Shape shape;
+    protected Shape[] shapes;
     protected double mass;
 
     protected double velX;
@@ -23,14 +24,14 @@ public abstract class PhysicalBody extends Sprite {
     protected double forceX;
     protected double forceY;
 
-    public PhysicalBody(Vec2 pos, double rot, Shape shape, double mass) {
+    public PhysicalBody(Vec2 pos, double rot, double mass, Shape... shapes) {
         super();
         setPosition(pos);
         this.rotation = rot;
-        this.shape = shape;
+        this.shapes = shapes;
         this.mass = mass;
-        this.width = shape.getSize();
-        this.height = shape.getSize();
+        this.width = shapes[0].getSize();
+        this.height = shapes[0].getSize();
     }
 
     public Vec2 getPosition() {
@@ -42,12 +43,12 @@ public abstract class PhysicalBody extends Sprite {
         this.y = position.getY();
     }
 
-    public Shape getShape() {
-        return shape;
+    public Shape[] getShapes() {
+        return shapes;
     }
 
-    public void setShape(Shape shape) {
-        this.shape = shape;
+    public void setShapes(Shape[] shapes) {
+        this.shapes = shapes;
     }
 
     public double getMass() {
@@ -80,8 +81,8 @@ public abstract class PhysicalBody extends Sprite {
     public void update(long delta) {
         accX += forceX / mass;
         accY += forceY / mass;
-        velX += accX;
-        velY += accY;
+        velX += accX * delta / Stardust2D.timePrecission;
+        velY += accY * delta / Stardust2D.timePrecission;
         forceX = 0;
         forceY = 0;
         accX = 0;
@@ -91,8 +92,21 @@ public abstract class PhysicalBody extends Sprite {
     }
 
     public void draw(Renderer renderer) {
-        if(shape instanceof CircleShape) {
-            ShapesDrawer.drawCircle(renderer, (CircleShape) shape, 32);
+        for(Shape shape : shapes) {
+            if (shape instanceof CircleShape) {
+                ShapesDrawer.drawCircle(renderer, (CircleShape) shape, 32);
+            }
         }
     }
+
+    public boolean isCollide(PhysicalBody another) {
+        for(Shape shape1 : shapes) {
+            for(Shape shape2 : another.shapes) {
+                if(shape1.isCollide(shape2, getPosition(), another.getPosition())) return true;
+            }
+        }
+        return false;
+    }
+
+    public abstract void onCollide(PhysicalBody another);
 }

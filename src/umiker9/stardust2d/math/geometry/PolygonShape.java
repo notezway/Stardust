@@ -50,6 +50,11 @@ public class PolygonShape extends Shape {
         }
     }
 
+    @Override
+    public boolean isCollide(Shape another, Vec2 pos1, Vec2 pos2) {
+        return false;
+    }
+
     public Vec2[] getPoints() {
         return points;
     }

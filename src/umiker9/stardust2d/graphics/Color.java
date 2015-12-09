@@ -104,11 +104,13 @@ public class Color {
     }
 
     public Color mix(Color c) {
-        this.r = MathUtil.clamp(0, r + c.r, 1);
-        this.g = MathUtil.clamp(0, g + c.g, 1);
-        this.b = MathUtil.clamp(0, b + c.b, 1);
-        this.a = MathUtil.clamp(0, a + c.a, 1);
-        return this;
+        Color ret =  new Color(
+                MathUtil.clamp(0, r + c.r, 1),
+                MathUtil.clamp(0, g + c.g, 1),
+                MathUtil.clamp(0, b + c.b, 1),
+                MathUtil.clamp(0, a + c.a, 1)
+        );
+        return ret;
     }
 
     public int toInt() {

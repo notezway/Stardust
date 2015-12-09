@@ -30,97 +30,65 @@ public class TestGame2 extends BasicGame {
         String path = "Assets/jackal.png";
         tex = TextureLoader.loadTexture(new Resource(path, FileIO.getFileAsBytes(path)));
         Logger.getInstance().setMinLevel(LogLevel.DEBUG);
-        final int[] i = {0, 0};
-        Shape shape = new CircleShape(new Vec2(), 20);
-        Shape sun = new CircleShape(new Vec2(), 100);
-        final PhysicalBody[] bodies = new PhysicalBody[400000];
 
-        bodies[0] = new PhysicalBody(new Vec2(0, 0), 0, sun, 100) {
-            public void update(long delta) {
-                super.update(delta);
-                //applyForce(bodies[1].getPosition().subtract(getPosition()).scale(10000D / bodies[1].getPosition().subtract(getPosition()).getLengthSq()));
-                //applyForce(bodies[2].getPosition().subtract(getPosition()).scale(10000D / bodies[2].getPosition().subtract(getPosition()).getLengthSq()));
-                //applyForce(bodies[3].getPosition().subtract(getPosition()).scale(10000D / bodies[3].getPosition().subtract(getPosition()).getLengthSq()));
-            }
-        };
-
-        bodies[1] = new PhysicalBody(new Vec2(200, 0), 0, shape, 100) {
-            public void update(long delta) {
-                super.update(delta);
-                applyForce(bodies[2].getPosition().subtract(getPosition()).scale(500D / bodies[2].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[0].getPosition().subtract(getPosition()).scale(10000D / bodies[0].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[3].getPosition().subtract(getPosition()).scale(500D / bodies[3].getPosition().subtract(getPosition()).getLengthSq()));
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 200 * 200) {
-                    //applyForce(getVelocity().normalize().scale(-1 * 10));
-                }
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 120 * 120) {
-                    applyForce(getPosition().subtract(bodies[0].getPosition()).normalize().scale(1000));
-                }
-            }
-        };
-
-        bodies[2] = new PhysicalBody(new Vec2(275, 0), 0, shape, 100) {
-            public void update(long delta) {
-
-                super.update(delta);
-                applyForce(bodies[1].getPosition().subtract(getPosition()).scale(500D / bodies[1].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[0].getPosition().subtract(getPosition()).scale(10000D / bodies[0].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[3].getPosition().subtract(getPosition()).scale(500D / bodies[3].getPosition().subtract(getPosition()).getLengthSq()));
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 200 * 200) {
-                    applyForce(getVelocity().normalize().scale(-1 * 10));
-                }
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 120 * 120) {
-                    //applyForce(getPosition().subtract(bodies[0].getPosition()).normalize().scale(1000));
-                }
-            }
-        };
-
-        bodies[3] = new PhysicalBody(new Vec2(350, 0), 0, shape, 100) {
-            public void update(long delta) {
-
-                super.update(delta);
-                applyForce(bodies[1].getPosition().subtract(getPosition()).scale(500D / bodies[1].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[0].getPosition().subtract(getPosition()).scale(10000D / bodies[0].getPosition().subtract(getPosition()).getLengthSq()));
-                applyForce(bodies[2].getPosition().subtract(getPosition()).scale(500D / bodies[2].getPosition().subtract(getPosition()).getLengthSq()));
-
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 200 * 200) {
-                    applyForce(getVelocity().normalize().scale(-1 * 10));
-                }
-                if(bodies[0].getPosition().subtract(getPosition()).getLengthSq() < 120 * 120) {
-                    applyForce(getPosition().subtract(bodies[0].getPosition()).normalize().scale(10000));
-                }
-            }
-        };
-
-        bodies[1].setVelocity(new Vec2(0, 80));
-        bodies[2].setVelocity(new Vec2(0, 78));
-        bodies[3].setVelocity(new Vec2(0, 45));
-        bodies[0].setColor(new Color(1D, 1D, 0D));
-        bodies[1].setColor(Color.RED);
-        bodies[2].setColor(Color.GREEN);
-        bodies[3].setColor(Color.BLUE);
+        Ball ball1 = new Ball(new Vec2(-300, 0), 0, 10, 200);
+        Ball ball2 = new Ball(new Vec2(300, 0), 0, 10, 200);
+        Ball ball3 = new Ball(new Vec2(0, 0), 0, 30, 9000);
+        Ball ball4 = new Ball(new Vec2(-325, 0), 0, 2, 5);
+        Ball ball5 = new Ball(new Vec2(325, 0), 0, 2, 5);
+        Ball ball6 = new Ball(new Vec2(0, 100), 0, 5, 1);
+        ball1.setVelocity(new Vec2(0, 120));
+        ball2.setVelocity(new Vec2(0, -120));
+        ball3.setVelocity(new Vec2(0, 0));
+        ball4.setVelocity(new Vec2(0, 120 + 63));
+        ball5.setVelocity(new Vec2(0, -120 - 63));
+        ball6.setVelocity(new Vec2(-180, 0));
+        ball1.setColor(Color.RED);
+        ball2.setColor(Color.BLUE);
+        ball3.setColor(Color.RED.mix(Color.GREEN));
+        ball4.setColor(Color.WHITE);
+        ball5.setColor(Color.WHITE);
+        ball6.setColor(Color.BLUE.mix(Color.RED));
 
 
-        Sprite testSprite = new Sprite(tex, 100, 100, 50, 50) {
+        Scene scene = new Scene() {
             @Override
             public void update(long delta) {
                 super.update(delta);
+                GameObject actor1, actor2;
 
-                x += delta/(double)Stardust2D.timePrecission*100;
-                rotation += delta/(double)Stardust2D.timePrecission*40;
+                for(int i = 0; i < actors.size(); i++) {
+                    actor1 = actors.get(i);
+                    for(int j = i + 1; j < actors.size(); j++) {
+                        actor2 = actors.get(j);
+                        if(actor1 instanceof PhysicalBody && actor2 instanceof PhysicalBody) {
+                            PhysicalBody body1 = (PhysicalBody) actor1;
+                            PhysicalBody body2 = (PhysicalBody) actor2;
+                            //System.out.println("!");
+                            if(body1.isCollide(body2)) {
+                                System.out.println("collide!");
+                                body1.onCollide(body2);
+                            }
+                            double K = body1.getMass() * body2.getMass() * 500;
+                            double Rsq = body2.getPosition().subtract(body1.getPosition()).getLengthSq();
+                            body1.applyForce(body2.getPosition().subtract(body1.getPosition()).normalize().scale(K / Rsq));
+                            body2.applyForce(body1.getPosition().subtract(body2.getPosition()).normalize().scale(K / Rsq));
+                        }
+                    }
+                }
             }
         };
-        Scene scene = new Scene();
-        scene.add(bodies[0]);
-        scene.add(bodies[1]);
-        scene.add(bodies[2]);
-        scene.add(bodies[3]);
-        scene.add(testSprite);
-        setCurrentScene(scene);
 
+        scene.add(ball1);
+        scene.add(ball2);
+        scene.add(ball3);
+        scene.add(ball4);
+        scene.add(ball5);
+        scene.add(ball6);
+        setCurrentScene(scene);
     }
 
     public TestGame2() {
-        super(800, 600, "Test game 2");
+        super(800, 700, "Test game 2");
     }
 }
