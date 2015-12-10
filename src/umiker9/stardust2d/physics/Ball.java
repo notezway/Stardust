@@ -1,11 +1,9 @@
-package umiker9.stardust2d;
+package umiker9.stardust2d.physics;
 
-import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.ShapesDrawer;
 import umiker9.stardust2d.math.Vec2;
 import umiker9.stardust2d.math.geometry.CircleShape;
-import umiker9.stardust2d.math.geometry.Shape;
 
 /**
  * Created by Notezway on 08.12.2015.
@@ -22,7 +20,7 @@ public class Ball extends PhysicalBody {
     }
 
     @Override
-    public void onCollide(PhysicalBody another) {
+    public void onCollision(PhysicalBody another) {
         if(another instanceof Ball) {
             Ball ball = (Ball) another;
             Vec2 o1 = getPosition();

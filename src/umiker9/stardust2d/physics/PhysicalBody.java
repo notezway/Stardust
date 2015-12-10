@@ -1,6 +1,7 @@
-package umiker9.stardust2d;
+package umiker9.stardust2d.physics;
 
-import umiker9.stardust2d.graphics.Color;
+import umiker9.stardust2d.Sprite;
+import umiker9.stardust2d.Stardust2D;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.ShapesDrawer;
 import umiker9.stardust2d.math.Vec2;
@@ -99,7 +100,7 @@ public abstract class PhysicalBody extends Sprite {
         }
     }
 
-    public boolean isCollide(PhysicalBody another) {
+    public boolean doesCollide(PhysicalBody another) {
         for(Shape shape1 : shapes) {
             for(Shape shape2 : another.shapes) {
                 if(shape1.isCollide(shape2, getPosition(), another.getPosition())) return true;
@@ -108,5 +109,5 @@ public abstract class PhysicalBody extends Sprite {
         return false;
     }
 
-    public abstract void onCollide(PhysicalBody another);
+    public abstract void onCollision(PhysicalBody another);
 }

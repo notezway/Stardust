@@ -1,12 +1,14 @@
 package umiker9.stardust2d.test;
 
-import umiker9.stardust2d.*;
+import umiker9.stardust2d.BasicGame;
+import umiker9.stardust2d.GameObject;
+import umiker9.stardust2d.Scene;
 import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.math.Vec2;
-import umiker9.stardust2d.math.geometry.CircleShape;
-import umiker9.stardust2d.math.geometry.Shape;
+import umiker9.stardust2d.physics.Ball;
+import umiker9.stardust2d.physics.PhysicalBody;
 import umiker9.stardust2d.systems.io.FileIO;
 import umiker9.stardust2d.systems.io.Resource;
 import umiker9.stardust2d.systems.log.LogLevel;
@@ -19,6 +21,10 @@ public class TestGame2 extends BasicGame {
 
     private static TestGame2 instance;
     private Texture2D tex;
+
+    public TestGame2() {
+        super(800, 700, "Test game 2");
+    }
 
     public static void main(String args[]) {
         instance = new TestGame2();
@@ -65,9 +71,9 @@ public class TestGame2 extends BasicGame {
                             PhysicalBody body1 = (PhysicalBody) actor1;
                             PhysicalBody body2 = (PhysicalBody) actor2;
                             //System.out.println("!");
-                            if(body1.isCollide(body2)) {
+                            if (body1.doesCollide(body2)) {
                                 System.out.println("collide!");
-                                body1.onCollide(body2);
+                                body1.onCollision(body2);
                             }
                             double K = body1.getMass() * body2.getMass() * 500;
                             double Rsq = body2.getPosition().subtract(body1.getPosition()).getLengthSq();
@@ -86,9 +92,5 @@ public class TestGame2 extends BasicGame {
         scene.add(ball5);
         scene.add(ball6);
         setCurrentScene(scene);
-    }
-
-    public TestGame2() {
-        super(800, 700, "Test game 2");
     }
 }
