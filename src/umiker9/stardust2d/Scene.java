@@ -46,10 +46,10 @@ public class Scene {
     }
 
     public void update(long delta) {
-        camera.update(delta);
         for(GameObject actor : actors) {
             actor.update(delta);
         }
+        camera.update(delta);
     }
 
     public void add(GameObject actor) {

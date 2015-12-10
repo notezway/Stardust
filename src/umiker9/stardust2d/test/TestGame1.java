@@ -1,10 +1,7 @@
 package umiker9.stardust2d.test;
 
 import org.lwjgl.input.Keyboard;
-import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.Scene;
-import umiker9.stardust2d.Sprite;
-import umiker9.stardust2d.Stardust2D;
+import umiker9.stardust2d.*;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
@@ -67,6 +64,9 @@ public class TestGame1 extends BasicGame {
         mainScene.add(testSprite);
         mainScene.add(bg);
         mainScene.add(testSprite2);
+        FollowingCamera followingCamera = new FollowingCamera(testSprite);
+        followingCamera.setFollowRotation(true);
+        mainScene.setCamera(followingCamera);
         setCurrentScene(mainScene);
     }
 }
