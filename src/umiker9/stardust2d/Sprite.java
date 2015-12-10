@@ -2,7 +2,6 @@ package umiker9.stardust2d;
 
 import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
-import umiker9.stardust2d.graphics.lwjgl2.Texture;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 
 /**
@@ -17,7 +16,7 @@ public class Sprite extends GameObject implements Renderable {
     protected double originX;
     protected double originY;
     protected double rotation;
-    protected Texture2D texture;
+    protected Tile image;
     protected Color color = Color.WHITE;
 
     public Sprite() {
@@ -28,18 +27,26 @@ public class Sprite extends GameObject implements Renderable {
         this(texture, 0, 0, texture.getWidth(), texture.getHeight());
     }
 
+    public Sprite(Tile image, double width, double height) {
+        this(image, 0, 0, width, height);
+    }
+
     public Sprite(Texture2D texture, double x, double y) {
         this(texture, x, y, texture.getWidth(), texture.getHeight());
     }
 
     public Sprite(Texture2D texture, double x, double y, double width, double height) {
+        this(new Tile(texture), x, y, width, height);
+    }
+
+    public Sprite(Tile image, double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.originX = width/2;
         this.originY = height/2;
-        this.texture = texture;
+        this.image = image;
     }
 
     public void render(Renderer renderer) {
@@ -55,7 +62,7 @@ public class Sprite extends GameObject implements Renderable {
     }
 
     public void draw(Renderer renderer) {
-        renderer.drawTexturedQuad(-originX, -originY, width, height, texture);
+        renderer.drawTexturedQuad(-originX, -originY, width, height, image);
     }
 
     @Override
@@ -119,12 +126,16 @@ public class Sprite extends GameObject implements Renderable {
         this.rotation = rotation;
     }
 
-    public Texture2D getTexture() {
-        return texture;
+    public Tile getImage() {
+        return image;
     }
 
-    public void setTexture(Texture2D texture) {
-        this.texture = texture;
+    public void setImage(Tile image) {
+        this.image = image;
+    }
+
+    public void setImage(Texture2D texture) {
+        this.image = new Tile(texture);
     }
 
     public Color getColor() {

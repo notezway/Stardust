@@ -33,10 +33,11 @@ public class TestGame1 extends BasicGame {
         //renderer.setInvertYAxis(false);
 
         Texture2D texture = TextureLoader.loadTexture(FileIO.getResource("Assets/jackal.png"));
+        TileSet tileset = new TileSet(texture, 16, 16);
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene();
-        Sprite testSprite2 = new Sprite(texture, 0, 0, 50, 50);
+        Sprite testSprite2 = new Sprite(tileset.getTile(4), 0, 0, 50, 50);
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
             @Override
             public void update(long delta) {
@@ -66,7 +67,7 @@ public class TestGame1 extends BasicGame {
         mainScene.add(testSprite2);
         FollowingCamera followingCamera = new FollowingCamera(testSprite);
         followingCamera.setFollowRotation(true);
-        mainScene.setCamera(followingCamera);
+        //mainScene.setCamera(followingCamera);
         setCurrentScene(mainScene);
     }
 }

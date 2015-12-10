@@ -1,5 +1,6 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
+import umiker9.stardust2d.Tile;
 import umiker9.stardust2d.graphics.Color;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -135,15 +136,61 @@ public class Renderer {
         glBegin(GL_QUADS);
 
         if(invertYAxis) {
-            glTexCoord2d(0, 0); glVertex2d(x, y);
             glTexCoord2d(1, 0); glVertex2d(x + width, y);
-            glTexCoord2d(1, 1); glVertex2d(x + width, y + height);
+            glTexCoord2d(0, 0);
+            glVertex2d(x, y);
             glTexCoord2d(0, 1); glVertex2d(x, y + height);
+            glTexCoord2d(1, 1);
+            glVertex2d(x + width, y + height);
         } else {
-            glTexCoord2d(0, 1); glVertex2d(x, y);
-            glTexCoord2d(1, 1); glVertex2d(x + width, y);
             glTexCoord2d(1, 0); glVertex2d(x + width, y + height);
             glTexCoord2d(0, 0); glVertex2d(x, y + height);
+            glTexCoord2d(0, 1);
+            glVertex2d(x, y);
+            glTexCoord2d(1, 1);
+            glVertex2d(x + width, y);
+        }
+        glEnd();
+    }
+
+    public void drawTexturedQuad(double x, double y, double width, double height, Tile tile) {
+        if (tile == null) {
+            tile = new Tile((Texture2D) Texture.none);
+        }
+
+        Texture texture = tile.getTexture();
+
+        if (texture != null && texture.isInitialized()) {
+            texture.bind();
+        } else {
+            Texture.none.bind();
+        }
+
+        double s1 = tile.getS1();
+        double t1 = tile.getT1();
+        double s2 = tile.getS2();
+        double t2 = tile.getT2();
+
+        glBegin(GL_QUADS);
+
+        if (invertYAxis) {
+            glTexCoord2d(s2, t1);
+            glVertex2d(x + width, y);
+            glTexCoord2d(s1, t1);
+            glVertex2d(x, y);
+            glTexCoord2d(s1, t2);
+            glVertex2d(x, y + height);
+            glTexCoord2d(s2, t2);
+            glVertex2d(x + width, y + height);
+        } else {
+            glTexCoord2d(s2, t1);
+            glVertex2d(x + width, y + height);
+            glTexCoord2d(s1, t1);
+            glVertex2d(x, y + height);
+            glTexCoord2d(s1, t2);
+            glVertex2d(x, y);
+            glTexCoord2d(s2, t2);
+            glVertex2d(x + width, y);
         }
         glEnd();
     }
