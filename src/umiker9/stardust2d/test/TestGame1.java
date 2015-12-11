@@ -37,7 +37,7 @@ public class TestGame1 extends BasicGame {
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene();
-        Sprite testSprite2 = new Sprite(tileset.getTile(4), 0, 0, 50, 50);
+        Sprite testSprite2 = new Sprite(tileset.getTile(0));
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
             @Override
             public void update(long delta) {

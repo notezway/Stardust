@@ -27,12 +27,16 @@ public class Sprite extends GameObject implements Renderable {
         this(texture, 0, 0, texture.getWidth(), texture.getHeight());
     }
 
-    public Sprite(Tile image, double width, double height) {
-        this(image, 0, 0, width, height);
+    public Sprite(Tile image) {
+        this(image, 0, 0, image.getPixelWidth(), image.getPixelHeight());
     }
 
     public Sprite(Texture2D texture, double x, double y) {
         this(texture, x, y, texture.getWidth(), texture.getHeight());
+    }
+
+    public Sprite(Tile image, double x, double y) {
+        this(image, x, y, image.getPixelWidth(), image.getHeight());
     }
 
     public Sprite(Texture2D texture, double x, double y, double width, double height) {
@@ -130,12 +134,12 @@ public class Sprite extends GameObject implements Renderable {
         return image;
     }
 
-    public void setImage(Tile image) {
-        this.image = image;
-    }
-
     public void setImage(Texture2D texture) {
         this.image = new Tile(texture);
+    }
+
+    public void setImage(Tile image) {
+        this.image = image;
     }
 
     public Color getColor() {

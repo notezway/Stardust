@@ -69,10 +69,11 @@ public abstract class PhysicalBody extends Sprite {
         this.velY = velocity.getY();
     }
 
-    public void accelerate(Vec2 acceleration) {
-        this.accX += acceleration.getX();
-        this.accY += acceleration.getY();
+    public void applyMomentum(Vec2 momentum) {
+        this.velX += momentum.getX() / mass;
+        this.velY += momentum.getY() / mass;
     }
+
 
     public void applyForce(Vec2 force) {
         this.forceX += force.getX();

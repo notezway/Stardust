@@ -22,22 +22,27 @@ public class TileSet {
     }
 
     public Tile getTile(int id, int customWidth, int customHegiht) {
-        int tilesH = texture.getWidth() / tileWidth;
-        int tilesV = texture.getHeight() / tileHeight;
+        int tileS = (id % getTilesH()) * tileWidth;
+        int tileT = (id / getTilesV()) * tileHeight;
 
-        int tileS = (id % tilesH) * tileWidth;
-        int tileT = (id / tilesV) * tileHeight;
-
-        return getRegion(tileS, tileT, customWidth, customHegiht);
+        return tile(tileS, tileT, customWidth, customHegiht);
     }
 
-    public Tile getRegion(int regionS, int regionT, int regionWidth, int regionHeight) {
-        double s1 = regionS / (double) texture.getWidth();
-        double t1 = regionT / (double) texture.getHeight();
-        double s2 = s1 + regionWidth / (double) texture.getWidth();
-        double t2 = t1 + regionHeight / (double) texture.getHeight();
+    public Tile tile(int tileS, int tileT, int customWidth, int customHeight) {
+        double s1 = tileS / (double) texture.getWidth();
+        double t1 = tileT / (double) texture.getHeight();
+        double s2 = s1 + customWidth / (double) texture.getWidth();
+        double t2 = t1 + customHeight / (double) texture.getHeight();
 
         return new Tile(texture, s1, t1, s2, t2);
+    }
+
+    public int getTilesH() {
+        return texture.getWidth() / tileWidth;
+    }
+
+    public int getTilesV() {
+        return texture.getHeight() / tileHeight;
     }
 
     public int getTileWidth() {
