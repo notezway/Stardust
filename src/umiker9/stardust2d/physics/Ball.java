@@ -31,6 +31,8 @@ public class Ball extends PhysicalBody {
             double m2 = ball.mass;
             Vec2 v10 = getVelocity();
             Vec2 v20 = ball.getVelocity();
+            System.out.println("body 1:" + v10.getLength());
+            System.out.println("body 2:" + v10.getLength());
             Vec2 v1;
             Vec2 v2 = v20.subtract(v10);
             Vec2 d = o2.subtract(o1);
@@ -38,7 +40,8 @@ public class Ball extends PhysicalBody {
             double absV2 = v2.getLength();
             double dot = d.dot(v2);
             if(dot >= 0) return;
-            double cos = dot / (d.getLength() * absV2);
+            double dL = d.getLength();
+            double cos = dot / (dL * absV2);
             double v2x = absV2 * cos;
             double v2y = Math.sqrt(absV2 * absV2 - v2x * v2x);
             double nv1x = 2 * m2 * v2x / (m1 + m2);
@@ -53,7 +56,14 @@ public class Ball extends PhysicalBody {
             v2 = nd.scale(nv2x).add(v10).add(nv2);
             this.setVelocity(v1);
             ball.setVelocity(v2);
-            ball.setPosition(o2.add(d.scale(((r1 + r2) - d.getLength()) / (r1 + r2))));
+            System.out.println("body 1:" + v1.getLength());
+            System.out.println("body 2:" + v1.getLength());
+            this.forceX = 0;
+            this.forceY = 0;
+            ball.forceX = 0;
+            ball.forceY = 0;
+            this.setPosition(o1.add(d.negate().scale(((r1 + r2) - dL) / (r1 + r2) / 2)));
+            ball.setPosition(o2.add(d.scale(((r1 + r2) - dL) / (r1 + r2) / 2)));
         }
     }
 }
