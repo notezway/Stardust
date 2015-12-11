@@ -48,7 +48,7 @@ public class Ball extends PhysicalBody {
             double nv2x = (m2 - m1) * v2x / (m1 + m2);
             Vec2 nd = d.normalize();
             v1 = nd.scale(nv1x).add(v10);
-            Vec2 nv2 = nd.rotate(Math.PI / 2 * Math.signum(d.dot(new Vec2(0, 1))) * Math.signum(d.dot(new Vec2(1, 0)))).scale(v2y);
+            Vec2 nv2 = nd.rotate(-Math.PI / 2).scale(v2y);
             System.out.println(nv2.toString());
             //double cos2 = nv2.dot(new Vec2(1, 0));
             //double v2yx = d.normalize().negate().rotate(Math.PI / 2).scale(v2y);
@@ -58,10 +58,10 @@ public class Ball extends PhysicalBody {
             ball.setVelocity(v2);
             System.out.println("body 1:" + v1.getLength());
             System.out.println("body 2:" + v1.getLength());
-            this.forceX = 0;
-            this.forceY = 0;
-            ball.forceX = 0;
-            ball.forceY = 0;
+            //this.forceX = 0;
+            //this.forceY = 0;
+            //ball.forceX = 0;
+            //ball.forceY = 0;
             this.setPosition(o1.add(d.negate().scale(((r1 + r2) - dL) / (r1 + r2) / 2)));
             ball.setPosition(o2.add(d.scale(((r1 + r2) - dL) / (r1 + r2) / 2)));
         }
