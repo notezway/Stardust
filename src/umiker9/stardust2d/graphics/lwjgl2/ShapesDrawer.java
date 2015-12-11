@@ -3,6 +3,7 @@ package umiker9.stardust2d.graphics.lwjgl2;
 import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.math.geometry.CircleShape;
 import umiker9.stardust2d.math.Vec2;
+import umiker9.stardust2d.math.geometry.PolygonShape;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -50,5 +51,18 @@ public class ShapesDrawer {
         glVertex2d(-10, 0);
         glEnd();
         renderer.popMatrix();*/
+    }
+
+    public static void drawPolygon(Renderer renderer, PolygonShape shape, Color color) {
+        renderer.setColor(color);
+        Texture.none.bind();
+        renderer.pushMatrix();
+        renderer.translate(shape.getCenterPoint().getX(), shape.getCenterPoint().getY());
+        glBegin(GL_POLYGON);
+        for(Vec2 point : shape.getPoints()) {
+            glVertex2d(point.getX(), point.getY());
+        }
+        glEnd();
+        renderer.popMatrix();
     }
 }

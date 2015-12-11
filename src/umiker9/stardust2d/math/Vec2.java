@@ -8,6 +8,8 @@ public class Vec2 extends Vector {
     protected static final int X = 0;
     protected static final int Y = 1;
 
+    public static final double ERROR_VALUE = 0.0001;
+
     
     public Vec2() {
         super(2);
@@ -50,11 +52,13 @@ public class Vec2 extends Vector {
     }
 
     public Vec2 negate() {
-        return scale(-1F);
+        return scale(-1D);
     }
 
     public Vec2 normalize() {
-        return scale(1F / getLength());
+        double len = getLength();
+        if(len < ERROR_VALUE) return new Vec2(0, 0);
+        return scale(1D / getLength());
     }
 
     public Vec2 add(Vec2 another) {
@@ -80,6 +84,15 @@ public class Vec2 extends Vector {
                 getX() * cos - getY() * sin,
                 getX() * sin + getY() * cos
         );
+    }
+
+    public double projection(Vec2 another) {
+        double dot = this.dot(another);
+        double len1 = this.getLength();
+        double len2 = another.getLength();
+        if(len1 < ERROR_VALUE || len2 < ERROR_VALUE) return 0;
+        double cos = dot / (len1 * len2);
+        return len1 * cos;
     }
 
     public Vector2f asGLVector() {

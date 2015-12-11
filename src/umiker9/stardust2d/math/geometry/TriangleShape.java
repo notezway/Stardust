@@ -2,6 +2,7 @@ package umiker9.stardust2d.math.geometry;
 
 import umiker9.stardust2d.math.MathUtil;
 import umiker9.stardust2d.math.Vec2;
+import umiker9.stardust2d.math.VecUtil;
 
 /**
  * Created by Notezway on 07.12.2015.
@@ -31,7 +32,7 @@ public class TriangleShape extends Shape {
 
     @Override
     public Vec2 getCenterPoint() {
-        return points[0].add(points[1]).add(points[2]).scale(1./3);
+        return VecUtil.average(points);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class TriangleShape extends Shape {
     }
 
     @Override
-    public boolean isCollide(Shape another, Vec2 pos1, Vec2 pos2) {
+    public boolean doesCollide(Shape another, Vec2 pos1, Vec2 pos2) {
         return false;
     }
 

@@ -15,6 +15,7 @@ public abstract class PhysicalBody extends Sprite {
 
     protected Shape[] shapes;
     protected double mass;
+    protected double size;
 
     protected double velX;
     protected double velY;
@@ -25,14 +26,15 @@ public abstract class PhysicalBody extends Sprite {
     protected double forceX;
     protected double forceY;
 
-    public PhysicalBody(Vec2 pos, double rot, double mass, Shape... shapes) {
+    public PhysicalBody(Vec2 pos, double rot, double mass, double size, Shape... shapes) {
         super();
         setPosition(pos);
         this.rotation = rot;
         this.shapes = shapes;
         this.mass = mass;
-        this.width = shapes[0].getSize();
-        this.height = shapes[0].getSize();
+        this.size = size;
+        this.width = size;
+        this.height = size;
     }
 
     public Vec2 getPosition() {
@@ -52,6 +54,10 @@ public abstract class PhysicalBody extends Sprite {
         this.shapes = shapes;
     }
 
+    public double getSize() {
+        return size;
+    }
+
     public double getMass() {
         return mass;
     }
@@ -64,9 +70,22 @@ public abstract class PhysicalBody extends Sprite {
         return new Vec2(velX, velY);
     }
 
+    public Vec2 getAcceleration() {
+        return new Vec2(accX, accY);
+    }
+
+    public Vec2 getForce() {
+        return new Vec2(forceX, forceY);
+    }
+
     public void setVelocity(Vec2 velocity) {
         this.velX = velocity.getX();
         this.velY = velocity.getY();
+    }
+
+    public void setAcceleration(Vec2 acceleration) {
+        this.accX = acceleration.getX();
+        this.accY = acceleration.getY();
     }
 
     public void applyMomentum(Vec2 momentum) {
@@ -104,11 +123,13 @@ public abstract class PhysicalBody extends Sprite {
     public boolean doesCollide(PhysicalBody another) {
         for(Shape shape1 : shapes) {
             for(Shape shape2 : another.shapes) {
-                if(shape1.isCollide(shape2, getPosition(), another.getPosition())) return true;
+                if(shape1.doesCollide(shape2, getPosition(), another.getPosition())) return true;
             }
         }
         return false;
     }
 
-    public abstract void onCollision(PhysicalBody another);
+    public void onCollision(PhysicalBody another) {
+        Collider.onCollide(this, another);
+    }
 }

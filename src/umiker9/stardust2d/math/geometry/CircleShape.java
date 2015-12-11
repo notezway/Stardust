@@ -48,10 +48,18 @@ public class CircleShape extends Shape {
     }
 
     @Override
-    public boolean isCollide(Shape another, Vec2 pos1, Vec2 pos2) {
+    public boolean doesCollide(Shape another, Vec2 pos1, Vec2 pos2) {
         if(another instanceof CircleShape) {
             return Collision2D.isCirclesIntersect(pos1.add(center), radius, pos2.add(((CircleShape)another).center),
                     ((CircleShape)another).radius);
+        } else if(another instanceof PolygonShape) {
+            PolygonShape polygon = (PolygonShape) another;
+            Vec2[] points = polygon.getPoints();
+            Vec2[] shifted = new Vec2[points.length];
+            for(int i = 0; i < points.length; i++) {
+                shifted[i] = points[i].add(pos2);
+            }
+            return Collision2D.getShapeWithCircleCollision(shifted, pos1.add(center), radius).length > 0;
         }
         return false;
     }

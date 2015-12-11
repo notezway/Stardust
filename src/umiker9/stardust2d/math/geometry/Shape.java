@@ -19,5 +19,5 @@ public abstract class Shape {
 
     public abstract void rotate(double rad);
 
-    public abstract boolean isCollide(Shape another, Vec2 pos1, Vec2 pos2);
+    public abstract boolean doesCollide(Shape another, Vec2 pos1, Vec2 pos2);
 }

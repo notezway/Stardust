@@ -1,4 +1,4 @@
-package umiker9.stardust2d.test;
+package umiker9.stardust2d.test.tankogame;
 
 import org.lwjgl.opengl.Display;
 import paulscode.sound.SoundSystem;
@@ -23,20 +23,17 @@ import umiker9.stardust2d.systems.log.AdvSoundSystemLogger;
 import umiker9.stardust2d.systems.log.LogLevel;
 import umiker9.stardust2d.systems.log.Logger;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
- * Created by Notezway on 11.12.2015.
+ * Created by Notezway on 12.12.2015.
  */
-public class TestGame3 extends BasicGame {
+public class Tankogame extends BasicGame {
 
-    private static TestGame3 instance;
+    private static Tankogame instance;
     private Texture2D tex;
     SoundSystem soundSystem;
 
     public static void main(String args[]) {
-        instance = new TestGame3();
+        instance = new Tankogame();
         Display.setLocation(350, 20);
         instance.start();
     }
@@ -47,35 +44,7 @@ public class TestGame3 extends BasicGame {
         tex = TextureLoader.loadTexture(new Resource(path, FileIO.getFileAsBytes(path)));
         Logger.getInstance().setMinLevel(LogLevel.DEBUG);
 
-        Ball ball1 = new Ball(new Vec2(-200, 0), 0, 10, 200);
-        Ball ball2 = new Ball(new Vec2(200, 0), 0, 10, 200);
-        Ball ball3 = new Ball(new Vec2(0, 0), 0, 30, 9000);
-        Ball ball4 = new Ball(new Vec2(-325, 0), 0, 2, 5);
-        Ball ball5 = new Ball(new Vec2(325, 0), 0, 2, 5);
-        Ball ball6 = new Ball(new Vec2(0, 100), 0, 5, 1);
-        ball1.setVelocity(new Vec2(120, 0));
-        ball2.setVelocity(new Vec2(-120, -10));
-        ball3.setVelocity(new Vec2(0, 0));
-        ball4.setVelocity(new Vec2(0, 120 + 63));
-        ball5.setVelocity(new Vec2(0, -120 - 63));
-        ball6.setVelocity(new Vec2(-180, 0));
-        ball1.setColor(Color.RED);
-        ball2.setColor(Color.BLUE);
-        ball3.setColor(Color.RED.mix(Color.GREEN));
-        ball4.setColor(Color.WHITE);
-        ball5.setColor(Color.WHITE);
-        ball6.setColor(Color.BLUE.mix(Color.RED));
-
-        PolygonShape quad = new PolygonShape(
-                new Vec2(-10, -10),
-                new Vec2(-10, 10),
-                new Vec2(10, 10),
-                new Vec2(10, -10)
-        );
-
-        Polygon p1 = new Polygon(new Vec2(60, 100), 100, 100, 20, quad);
-        Polygon p2 = new Polygon(new Vec2(400, 100), 0, 100, 20, quad);
-        p2.setVelocity(new Vec2(-100, 0));
+        //to be continued...
 
 
         Scene scene = new Scene() {
@@ -109,14 +78,6 @@ public class TestGame3 extends BasicGame {
             }
         };
 
-        scene.add(ball1);
-        scene.add(ball2);
-        //scene.add(ball3);
-        //scene.add(ball4);
-        //scene.add(ball5);
-        //scene.add(ball6);
-        scene.add(p1);
-        scene.add(p2);
         setCurrentScene(scene);
 
         SoundSystemConfig.setLogger(new AdvSoundSystemLogger(Logger.getInstance()));
@@ -141,7 +102,7 @@ public class TestGame3 extends BasicGame {
         super.exit();
     }
 
-    public TestGame3() {
-        super(1000, 680, "Test game 3");
+    public Tankogame() {
+        super(1000, 680, "Tankogame");
     }
 }
