@@ -1,7 +1,6 @@
 package umiker9.stardust2d.physics;
 
 import umiker9.stardust2d.Sprite;
-import umiker9.stardust2d.Stardust2D;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.ShapesDrawer;
 import umiker9.stardust2d.math.Vec2;
@@ -70,22 +69,22 @@ public abstract class PhysicalBody extends Sprite {
         return new Vec2(velX, velY);
     }
 
-    public Vec2 getAcceleration() {
-        return new Vec2(accX, accY);
-    }
-
-    public Vec2 getForce() {
-        return new Vec2(forceX, forceY);
-    }
-
     public void setVelocity(Vec2 velocity) {
         this.velX = velocity.getX();
         this.velY = velocity.getY();
     }
 
+    public Vec2 getAcceleration() {
+        return new Vec2(accX, accY);
+    }
+
     public void setAcceleration(Vec2 acceleration) {
         this.accX = acceleration.getX();
         this.accY = acceleration.getY();
+    }
+
+    public Vec2 getForce() {
+        return new Vec2(forceX, forceY);
     }
 
     public void applyMomentum(Vec2 momentum) {
@@ -99,17 +98,18 @@ public abstract class PhysicalBody extends Sprite {
         this.forceY += force.getY();
     }
 
-    public void update(long delta) {
+    @Override
+    public void update(double delta) {
         accX += forceX / mass;
         accY += forceY / mass;
-        velX += accX * delta / Stardust2D.timePrecission;
-        velY += accY * delta / Stardust2D.timePrecission;
+        velX += accX * delta;
+        velY += accY * delta;
         forceX = 0;
         forceY = 0;
         accX = 0;
         accY = 0;
-        x += velX * delta / Stardust2D.timePrecission;
-        y += velY * delta / Stardust2D.timePrecission;
+        x += velX * delta;
+        y += velY * delta;
     }
 
     public void draw(Renderer renderer) {

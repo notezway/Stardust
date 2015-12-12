@@ -2,6 +2,8 @@ package umiker9.stardust2d.systems.io.HID;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import umiker9.stardust2d.Stardust2D;
 
 public class InputManager extends InputRelay {
     protected InputState inputState;
@@ -46,10 +48,17 @@ public class InputManager extends InputRelay {
             }
 
             MouseEvent event = new MouseEvent(inputState);
-            event.setEventX(Mouse.getEventX());
-            event.setEventY(Mouse.getEventY());
-            event.setEventDX(Mouse.getEventDX());
-            event.setEventDY(Mouse.getEventDY());
+            event.setEventX(Mouse.getEventX() - Display.getWidth() / 2);
+            event.setEventDX(Mouse.getEventDX() - Display.getWidth() / 2);
+
+            if (Stardust2D.invertYAxis) {
+                event.setEventY(Display.getHeight() / 2 - Mouse.getEventY());
+                event.setEventDY(-Mouse.getEventDY());
+            } else {
+                event.setEventY(Mouse.getEventY());
+                event.setEventDY(Mouse.getEventDY() - Display.getHeight() / 2);
+            }
+
             event.setEventDWheel(Mouse.getEventDWheel());
             event.setEventButton(Mouse.getEventButton());
             event.setEventButtonState(Mouse.getEventButtonState());

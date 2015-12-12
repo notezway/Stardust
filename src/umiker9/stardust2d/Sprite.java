@@ -7,7 +7,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 /**
  * Created by miker9 on 23/11/2015.
  */
-public class Sprite extends GameObject implements Renderable, Updatable {
+public class Sprite extends GameObject implements Renderable {
     protected double x;
     protected double y;
     protected double depth;
@@ -23,12 +23,17 @@ public class Sprite extends GameObject implements Renderable, Updatable {
 
     }
 
-    public Sprite(Texture2D texture) {
-        this(texture, 0, 0, texture.getWidth(), texture.getHeight());
+    public Sprite(Tile image, double x, double y, double width, double height) {
+        this();
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.image = image;
     }
 
-    public Sprite(Tile image) {
-        this(image, 0, 0, image.getPixelWidth(), image.getPixelHeight());
+    public Sprite(Texture2D texture, double x, double y, double width, double height) {
+        this(new Tile(texture), x, y, width, height);
     }
 
     public Sprite(Texture2D texture, double x, double y) {
@@ -39,18 +44,12 @@ public class Sprite extends GameObject implements Renderable, Updatable {
         this(image, x, y, image.getPixelWidth(), image.getHeight());
     }
 
-    public Sprite(Texture2D texture, double x, double y, double width, double height) {
-        this(new Tile(texture), x, y, width, height);
+    public Sprite(Texture2D texture) {
+        this(texture, 0, 0, texture.getWidth(), texture.getHeight());
     }
 
-    public Sprite(Tile image, double x, double y, double width, double height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.originX = width/2;
-        this.originY = height/2;
-        this.image = image;
+    public Sprite(Tile image) {
+        this(image, 0, 0, image.getPixelWidth(), image.getPixelHeight());
     }
 
     public void render(Renderer renderer) {
@@ -69,9 +68,13 @@ public class Sprite extends GameObject implements Renderable, Updatable {
         renderer.drawTexturedQuad(-originX, -originY, width, height, image);
     }
 
-    @Override
-    public void update(long delta) {
+    public void update(double delta) {
 
+    }
+
+    public void setCentered() {
+        setOriginX(getWidth() / 2);
+        setOriginY(getHeight() / 2);
     }
 
     public double getX() {

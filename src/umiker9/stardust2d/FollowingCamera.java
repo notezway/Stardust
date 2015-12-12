@@ -17,7 +17,7 @@ public class FollowingCamera extends Camera {
     }
 
     @Override
-    public void update(long delta) {
+    public void update(double delta) {
         this.x = target.getX();
         this.y = target.getY();
         if (followRotation) {
@@ -25,7 +25,7 @@ public class FollowingCamera extends Camera {
         }
     }
 
-    public boolean getFollowRotation() {
+    public boolean doesFollowRotation() {
         return followRotation;
     }
 

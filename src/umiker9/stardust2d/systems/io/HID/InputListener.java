@@ -1,14 +1,14 @@
 package umiker9.stardust2d.systems.io.HID;
 
-public class InputHandler {
+public class InputListener {
     protected InputRelay inputSource;
     protected int priority;
 
-    public InputHandler() {
+    public InputListener() {
 
     }
 
-    public InputHandler(int priority) {
+    public InputListener(int priority) {
        this.priority = priority;
     }
 

@@ -1,5 +1,6 @@
 package umiker9.stardust2d.graphics.lwjgl2;
 
+import umiker9.stardust2d.Stardust2D;
 import umiker9.stardust2d.Tile;
 import umiker9.stardust2d.graphics.Color;
 
@@ -11,16 +12,10 @@ import static org.lwjgl.opengl.GL11.*;
 public class Renderer {
     protected int width;
     protected int height;
-    protected boolean invertYAxis;
-
-    public Renderer(int width, int height, boolean invertYAxis) {
-        this.width = width;
-        this.height = height;
-        this.invertYAxis = invertYAxis;
-    }
 
     public Renderer(int width, int height) {
-        this(width, height, false);
+        this.width = width;
+        this.height = height;
     }
 
     public void init() {
@@ -37,7 +32,7 @@ public class Renderer {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        if(invertYAxis) {
+        if (Stardust2D.invertYAxis) {
             glOrtho(0, width, height, 0, 0, 1);
         } else {
             glOrtho(0, width, 0, height, 0, 1);
@@ -62,15 +57,6 @@ public class Renderer {
 
     public void setHeight(int height) {
         this.height = height;
-        updateMatrices();
-    }
-
-    public boolean isInvertYAxis() {
-        return invertYAxis;
-    }
-
-    public void setInvertYAxis(boolean invertYAxis) {
-        this.invertYAxis = invertYAxis;
         updateMatrices();
     }
 
@@ -101,7 +87,7 @@ public class Renderer {
     }
 
     public void rotate(double angle, double x, double y, double z) {
-        if(invertYAxis) {
+        if (Stardust2D.invertYAxis) {
             glRotated(angle, x, y, -z);
         } else {
             glRotated(angle, x, y, z);
@@ -135,7 +121,7 @@ public class Renderer {
         }
         glBegin(GL_QUADS);
 
-        if(invertYAxis) {
+        if (Stardust2D.invertYAxis) {
             glTexCoord2d(1, 0); glVertex2d(x + width, y);
             glTexCoord2d(0, 0);
             glVertex2d(x, y);
@@ -173,7 +159,7 @@ public class Renderer {
 
         glBegin(GL_QUADS);
 
-        if (invertYAxis) {
+        if (Stardust2D.invertYAxis) {
             glTexCoord2d(s2, t1);
             glVertex2d(x + width, y);
             glTexCoord2d(s1, t1);

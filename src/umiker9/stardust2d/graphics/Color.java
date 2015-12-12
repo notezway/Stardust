@@ -7,6 +7,22 @@ import umiker9.stardust2d.math.MathUtil;
  */
 public class Color {
 
+    public static final Color BLACK = new Color(0, 0, 0);
+    public static final Color GRAY = new Color(128, 128, 128);
+    public static final Color SILVER = new Color(192, 192, 192);
+    public static final Color WHITE = new Color(255, 255, 255);
+    public static final Color MAROON = new Color(128, 0, 0);
+    public static final Color RED = new Color(255, 0, 0);
+    public static final Color OLIVE = new Color(128, 128, 0);
+    public static final Color YELLOW = new Color(255, 255, 0);
+    public static final Color GREEN = new Color(0, 128, 0);
+    public static final Color LIME = new Color(0, 255, 0);
+    public static final Color TEAL = new Color(0, 128, 128);
+    public static final Color AQUA = new Color(0, 255, 255);
+    public static final Color NAVY = new Color(0, 0, 128);
+    public static final Color BLUE = new Color(0, 0, 255);
+    public static final Color PURPLE = new Color(128, 0, 128);
+    public static final Color FUCHSIA = new Color(255, 0, 255);
     private double r, g, b, a;
 
     public Color(double r, double g, double b) {
@@ -31,6 +47,24 @@ public class Color {
 
     public Color(long data) {
         set(data);
+    }
+
+    public static double[] getComponents(int color) {
+        return new double[]{
+                ((color & 0xFF000000) >> 24) / (double) 0xFF,
+                ((color & 0x00FF0000) >> 16) / (double) 0xFF,
+                ((color & 0x0000FF00) >> 8) / (double) 0xFF,
+                ((color & 0x000000FF)) / (double) 0xFF
+        };
+    }
+
+    public static double[] getComponents(long color) {
+        return new double[]{
+                ((color & 0xFFFF000000000000L) >> 48) / (double) 0xFFFF,
+                ((color & 0x0000FFFF00000000L) >> 32) / (double) 0xFFFF,
+                ((color & 0x00000000FFFF0000L) >> 16) / (double) 0xFFFF,
+                ((color & 0x000000000000FFFFL)) / (double) 0xFFFF
+        };
     }
 
     public Color set(double r, double g, double b, double a) {
@@ -71,21 +105,13 @@ public class Color {
         return r;
     }
 
-    public double getG() {
-        return g;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public double getA() {
-        return a;
-    }
-
     public Color setR(int r) {
         this.r = r;
         return this;
+    }
+
+    public double getG() {
+        return g;
     }
 
     public Color setG(int g) {
@@ -93,9 +119,17 @@ public class Color {
         return this;
     }
 
+    public double getB() {
+        return b;
+    }
+
     public Color setB(int b) {
         this.b = b;
         return this;
+    }
+
+    public double getA() {
+        return a;
     }
 
     public Color setA(int a) {
@@ -104,13 +138,12 @@ public class Color {
     }
 
     public Color mix(Color c) {
-        Color ret =  new Color(
+        return new Color(
                 MathUtil.clamp(0, r + c.r, 1),
                 MathUtil.clamp(0, g + c.g, 1),
                 MathUtil.clamp(0, b + c.b, 1),
                 MathUtil.clamp(0, a + c.a, 1)
         );
-        return ret;
     }
 
     public int toInt() {
@@ -127,27 +160,4 @@ public class Color {
                 ((long)(a*0xFFFF));
     }
 
-    public static double[] getComponents(int color) {
-        return new double[] {
-                ((color & 0xFF000000) >> 24) /(double)0xFF,
-                ((color & 0x00FF0000) >> 16) /(double)0xFF,
-                ((color & 0x0000FF00) >> 8)  /(double)0xFF,
-                ((color & 0x000000FF))       /(double)0xFF
-        };
-    }
-
-    public static double[] getComponents(long color) {
-        return new double[] {
-                ((color & 0xFFFF000000000000L) >> 48) /(double)0xFFFF,
-                ((color & 0x0000FFFF00000000L) >> 32) /(double)0xFFFF,
-                ((color & 0x00000000FFFF0000L) >> 16) /(double)0xFFFF,
-                ((color & 0x000000000000FFFFL))       /(double)0xFFFF
-        };
-    }
-
-    public static final Color WHITE = new Color(1., 1., 1.);
-    public static final Color BLACK = new Color(0., 0., 0.);
-    public static final Color RED = new Color(1., 0., 0.);
-    public static final Color GREEN = new Color(0., 1., 0.);
-    public static final Color BLUE = new Color(0., 0., 1.);
 }

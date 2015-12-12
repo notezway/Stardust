@@ -1,32 +1,9 @@
 package umiker9.stardust2d.test.tankogame;
 
-import org.lwjgl.opengl.Display;
-import paulscode.sound.SoundSystem;
-import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.SoundSystemException;
-import paulscode.sound.codecs.CodecWav;
-import paulscode.sound.libraries.LibraryLWJGLOpenAL;
-import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.GameObject;
-import umiker9.stardust2d.Scene;
-import umiker9.stardust2d.graphics.Color;
-import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
-import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
-import umiker9.stardust2d.math.Vec2;
-import umiker9.stardust2d.math.geometry.PolygonShape;
-import umiker9.stardust2d.physics.Ball;
-import umiker9.stardust2d.physics.PhysicalBody;
-import umiker9.stardust2d.physics.Polygon;
-import umiker9.stardust2d.systems.io.FileIO;
-import umiker9.stardust2d.systems.io.Resource;
-import umiker9.stardust2d.systems.log.AdvSoundSystemLogger;
-import umiker9.stardust2d.systems.log.LogLevel;
-import umiker9.stardust2d.systems.log.Logger;
-
 /**
  * Created by Notezway on 12.12.2015.
  */
-public class Tankogame extends BasicGame {
+/*public class Tankogame extends BasicGame {
 
     private static Tankogame instance;
     private Texture2D tex;
@@ -35,7 +12,7 @@ public class Tankogame extends BasicGame {
     public static void main(String args[]) {
         instance = new Tankogame();
         Display.setLocation(350, 20);
-        instance.start();
+        instance.launch();
     }
 
     protected void init() {
@@ -94,7 +71,7 @@ public class Tankogame extends BasicGame {
         }
         soundSystem.setVolume("background", 0.01F);*/
 
-    }
+ /*   }
 
     @Override
     protected void exit() {
@@ -105,4 +82,4 @@ public class Tankogame extends BasicGame {
     public Tankogame() {
         super(1000, 680, "Tankogame");
     }
-}
+}*/

@@ -1,32 +1,9 @@
 package umiker9.stardust2d.test;
 
-import paulscode.sound.SoundSystem;
-import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.SoundSystemException;
-import paulscode.sound.codecs.CodecWav;
-import paulscode.sound.libraries.LibraryLWJGLOpenAL;
-import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.GameObject;
-import umiker9.stardust2d.Scene;
-import umiker9.stardust2d.graphics.Color;
-import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
-import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
-import umiker9.stardust2d.math.Vec2;
-import umiker9.stardust2d.physics.Ball;
-import umiker9.stardust2d.physics.PhysicalBody;
-import umiker9.stardust2d.systems.io.FileIO;
-import umiker9.stardust2d.systems.io.Resource;
-import umiker9.stardust2d.systems.log.AdvSoundSystemLogger;
-import umiker9.stardust2d.systems.log.LogLevel;
-import umiker9.stardust2d.systems.log.Logger;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Created by Notezway on 23.11.2015.
  */
-public class TestGame2 extends BasicGame {
+/*public class TestGame2 extends BasicGame {
 
     private static TestGame2 instance;
     private Texture2D tex;
@@ -34,7 +11,7 @@ public class TestGame2 extends BasicGame {
 
     public static void main(String args[]) {
         instance = new TestGame2();
-        instance.start();
+        instance.launch();
     }
 
     protected void init() {
@@ -94,12 +71,12 @@ public class TestGame2 extends BasicGame {
             }
         };
 
-        scene.add(ball1);
-        scene.add(ball2);
-        scene.add(ball3);
-        scene.add(ball4);
-        scene.add(ball5);
-        scene.add(ball6);
+        scene.addActor(ball1);
+        scene.addActor(ball2);
+        scene.addActor(ball3);
+        scene.addActor(ball4);
+        scene.addActor(ball5);
+        scene.addActor(ball6);
         setCurrentScene(scene);
 
         SoundSystemConfig.setLogger(new AdvSoundSystemLogger(Logger.getInstance()));
@@ -127,4 +104,4 @@ public class TestGame2 extends BasicGame {
     public TestGame2() {
         super(800, 700, "Test game 2");
     }
-}
+}*/

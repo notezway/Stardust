@@ -11,11 +11,15 @@ import java.util.Date;
  */
 public class TimeUtil {
 
-    public static long getSystemTimeInMillis() {
-        return System.nanoTime() / 1000000;
+    public static long getCurrentTime() {
+        return System.nanoTime();
     }
 
-    public static String getTime(String format) {
+    public static long getTimePrecission() {
+        return 1000000000;
+    }
+
+    public static String getDateAndTime(String format) {
         DateFormat dateFormat = new SimpleDateFormat(format);
         Date date = new Date();
         return dateFormat.format(date);

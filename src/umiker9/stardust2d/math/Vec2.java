@@ -3,12 +3,10 @@ package umiker9.stardust2d.math;
 import org.lwjgl.util.vector.Vector2f;
 
 
-
 public class Vec2 extends Vector {
+    public static final double ERROR_VALUE = 0.0001;
     protected static final int X = 0;
     protected static final int Y = 1;
-
-    public static final double ERROR_VALUE = 0.0001;
 
     
     public Vec2() {

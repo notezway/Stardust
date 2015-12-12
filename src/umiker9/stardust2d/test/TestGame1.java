@@ -6,7 +6,7 @@ import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
-import umiker9.stardust2d.systems.io.HID.InputHandler;
+import umiker9.stardust2d.systems.io.HID.InputListener;
 import umiker9.stardust2d.systems.io.HID.KeyboardEvent;
 import umiker9.stardust2d.systems.io.HID.MouseEvent;
 
@@ -24,8 +24,10 @@ public class TestGame1 extends BasicGame {
     }
 
     public static void main(String args[]) {
+        Stardust2D.invertYAxis = true;
         instance = new TestGame1();
-        instance.start();
+        instance.launch();
+
     }
 
     @Override
@@ -38,7 +40,8 @@ public class TestGame1 extends BasicGame {
         TileSet tileset = new TileSet(texture, 16, 16);
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
-        mainScene = new Scene();
+        mainScene = new Scene("main");
+
         Sprite testSprite2 = new Sprite(tileset.getTile(0)) {
             @Override
             public void onMouseButtonPressed(MouseEvent event) {
@@ -48,15 +51,15 @@ public class TestGame1 extends BasicGame {
         };
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
             @Override
-            public void update(long delta) {
+            public void update(double delta) {
                 super.update(delta);
 
-                x += delta/(double)Stardust2D.timePrecission*100;
-                rotation += delta/(double)Stardust2D.timePrecission*40;
+                x += delta * 100;
+                rotation += delta * 40;
             }
         };
 
-        inputManager.addListener(new InputHandler() {
+        mainScene.addInputListener(new InputListener() {
             @Override
             public void onKeyboardKeyReleased(KeyboardEvent event) {
                 super.onKeyboardKeyReleased(event);
@@ -66,16 +69,30 @@ public class TestGame1 extends BasicGame {
             }
         });
 
+        mainScene.addInputListener(new InputListener() {
+            @Override
+            public void onMouseMoved(MouseEvent event) {
+                testSprite2.setX(event.getEventX());
+                testSprite2.setY(event.getEventY());
+            }
+        });
+
         Sprite bg = new Sprite(background);
         bg.setDepth(1);
         //bg.setColor(new Color(1, 1, 1, 0.8));
 
-        mainScene.add(testSprite);
-        mainScene.add(bg);
-        mainScene.add(testSprite2);
+        mainScene.addActor(testSprite);
+        mainScene.addActor(bg);
+        mainScene.addActor(testSprite2);
         FollowingCamera followingCamera = new FollowingCamera(testSprite);
         followingCamera.setFollowRotation(true);
-        //mainScene.setCamera(followingCamera);
-        setCurrentScene(mainScene);
+        Camera camera1 = new Camera(200, 200);
+        camera1.setRotation(70);
+        camera1.setScale(1.5);
+        mainScene.setCamera(followingCamera);
+
+
+        addScene(mainScene);
+        setCurrentScene("main");
     }
 }

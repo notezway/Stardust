@@ -7,8 +7,8 @@ import java.util.Queue;
 /**
  * Created by miker9 on 12/12/2015.
  */
-public class InputRelay extends InputHandler {
-    protected final Queue<InputHandler> inputListeners = new PriorityQueue<>((Comparator<InputHandler>) (o1, o2) -> o2.getPriority() - o1.getPriority());
+public class InputRelay extends InputListener {
+    private final Queue<InputListener> inputListeners = new PriorityQueue<>((Comparator<InputListener>) (o1, o2) -> o2.getPriority() - o1.getPriority());
     private boolean active = true;
 
     public InputRelay() {
@@ -20,22 +20,23 @@ public class InputRelay extends InputHandler {
     }
 
 
-    public void addListener(InputHandler listener) {
+    public void addInputListener(InputListener listener) {
         if (!inputListeners.contains(listener)) {
             inputListeners.add(listener);
         }
         listener.setInputSource(this);
     }
 
-    public void removeListener(InputHandler listener) {
+    public void removeInputListener(InputListener listener) {
         inputListeners.remove(listener);
+        listener.setInputSource(null);
     }
 
     @Override
     public void onInputEvent(InputEvent event) {
         super.onInputEvent(event);
         if (isActive()) {
-            for (InputHandler listener : inputListeners) {
+            for (InputListener listener : inputListeners) {
                 if (event.isCancelled()) {
                     break;
                 }
@@ -45,7 +46,11 @@ public class InputRelay extends InputHandler {
     }
 
     public InputState getInputState() {
-        return inputSource.getInputState();
+        if (inputSource != null) {
+            return inputSource.getInputState();
+        } else {
+            return new InputState();
+        }
     }
 
     public boolean isActive() {

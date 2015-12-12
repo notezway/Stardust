@@ -1,7 +1,10 @@
 package umiker9.stardust2d;
 
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.math.Vec2;
+import umiker9.stardust2d.systems.io.HID.InputEvent;
 import umiker9.stardust2d.systems.io.HID.InputRelay;
+import umiker9.stardust2d.systems.io.HID.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +13,20 @@ import java.util.List;
  * Created by miker9 on 22/11/2015.
  */
 
-public class Scene extends InputRelay {
-    protected List<GameObject> actors = new ArrayList<>();
-    protected Camera camera;
+//todo Пофиксить то что active берется из InputRelay хз как
 
-    public Scene() {
-        this(new Camera());
+public class Scene extends InputRelay {
+    private List<GameObject> actors = new ArrayList<>();
+    private Camera camera;
+    private String name;
+
+    public Scene(String name) {
+        this.name = name;
+        this.setActive(false);
     }
 
-    public Scene(Camera camera) {
+    public Scene(String name, Camera camera) {
+        this.name = name;
         this.camera = camera;
     }
 
@@ -36,7 +44,9 @@ public class Scene extends InputRelay {
 
         //Apply camera
         renderer.pushMatrix();
-        camera.applyTransforms(renderer);
+        if (camera != null) {
+            camera.applyTransforms(renderer);
+        }
 
         //render objects
         for (Renderable renderable : renderables) {
@@ -46,22 +56,71 @@ public class Scene extends InputRelay {
         renderer.popMatrix();
     }
 
-    public void update(long delta) {
+    public void update(double delta) {
         for(GameObject actor : actors) {
             actor.update(delta);
         }
-        camera.update(delta);
+        if (camera != null) {
+            camera.update(delta);
+        }
     }
 
-    public void add(GameObject actor) {
+    @Override
+    public void onInputEvent(InputEvent event) {
+        if (camera != null && event instanceof MouseEvent) {
+            //make a copy
+            MouseEvent newEvent = new MouseEvent((MouseEvent) event);
+            Vec2 position = new Vec2(newEvent.getEventX(), newEvent.getEventY());
+            if (Stardust2D.invertYAxis) {
+                position = position.rotate(Math.toRadians(-camera.getRotation()));
+            } else {
+                position = position.rotate(Math.toRadians(camera.getRotation()));
+            }
+            position = position.scale(1 / camera.getScale());
+            position = position.add(new Vec2(camera.getX(), camera.getY()));
+
+
+            Vec2 deltaPosition = new Vec2(newEvent.getEventDX(), newEvent.getEventDY());
+            if (Stardust2D.invertYAxis) {
+                deltaPosition = deltaPosition.rotate(Math.toRadians(-camera.getRotation()));
+            } else {
+                deltaPosition = deltaPosition.rotate(Math.toRadians(camera.getRotation()));
+            }
+            deltaPosition = deltaPosition.scale(1 / camera.getScale());
+
+            newEvent.setEventX((int) position.getX());
+            newEvent.setEventY((int) position.getY());
+            newEvent.setEventDX((int) deltaPosition.getX());
+            newEvent.setEventDY((int) deltaPosition.getY());
+
+            super.onInputEvent(newEvent);
+
+            if (newEvent.isCancelled()) {
+                event.setCancelled(true);
+            }
+        } else {
+            super.onInputEvent(event);
+        }
+    }
+
+    public void addActor(GameObject actor) {
         actor.setScene(this);
         actors.add(actor);
-        inputListeners.add(actor);
+        addInputListener(actor);
     }
 
-    public void remove(GameObject actor) {
+    public void removeActor(GameObject actor) {
+        actor.setScene(null);
         actors.remove(actor);
-        inputListeners.remove(actor);
+        removeInputListener(actor);
+    }
+
+    public void onSceneEntered() {
+        setActive(true);
+    }
+
+    public void onSceneLeft() {
+        setActive(false);
     }
 
     public Camera getCamera() {
@@ -70,6 +129,14 @@ public class Scene extends InputRelay {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<GameObject> getActors() {

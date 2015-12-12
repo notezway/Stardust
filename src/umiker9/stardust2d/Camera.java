@@ -5,7 +5,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 /**
  * Created by miker9 on 23/11/2015.
  */
-public class Camera implements Updatable {
+public class Camera {
     protected double x;
     protected double y;
     protected double rotation;
@@ -28,9 +28,7 @@ public class Camera implements Updatable {
         renderer.translate(-x, -y);
     }
 
-
-    @Override
-    public void update(long delta) {
+    public void update(double delta) {
 
     }
 

@@ -16,7 +16,6 @@ public class TileSet {
         this.tileHeight = tileHeight;
     }
 
-
     public Tile getTile(int id) {
         return getTile(id, tileWidth, tileHeight);
     }

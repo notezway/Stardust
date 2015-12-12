@@ -1,35 +1,9 @@
 package umiker9.stardust2d.test;
 
-import org.lwjgl.opengl.Display;
-import paulscode.sound.SoundSystem;
-import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.SoundSystemException;
-import paulscode.sound.codecs.CodecWav;
-import paulscode.sound.libraries.LibraryLWJGLOpenAL;
-import umiker9.stardust2d.BasicGame;
-import umiker9.stardust2d.GameObject;
-import umiker9.stardust2d.Scene;
-import umiker9.stardust2d.graphics.Color;
-import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
-import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
-import umiker9.stardust2d.math.Vec2;
-import umiker9.stardust2d.math.geometry.PolygonShape;
-import umiker9.stardust2d.physics.Ball;
-import umiker9.stardust2d.physics.PhysicalBody;
-import umiker9.stardust2d.physics.Polygon;
-import umiker9.stardust2d.systems.io.FileIO;
-import umiker9.stardust2d.systems.io.Resource;
-import umiker9.stardust2d.systems.log.AdvSoundSystemLogger;
-import umiker9.stardust2d.systems.log.LogLevel;
-import umiker9.stardust2d.systems.log.Logger;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Created by Notezway on 11.12.2015.
  */
-public class TestGame3 extends BasicGame {
+/*public class TestGame3 extends BasicGame {
 
     private static TestGame3 instance;
     private Texture2D tex;
@@ -38,7 +12,7 @@ public class TestGame3 extends BasicGame {
     public static void main(String args[]) {
         instance = new TestGame3();
         Display.setLocation(350, 20);
-        instance.start();
+        instance.launch();
     }
 
     protected void init() {
@@ -109,14 +83,14 @@ public class TestGame3 extends BasicGame {
             }
         };
 
-        scene.add(ball1);
-        scene.add(ball2);
+        scene.addActor(ball1);
+        scene.addActor(ball2);
         //scene.add(ball3);
         //scene.add(ball4);
         //scene.add(ball5);
         //scene.add(ball6);
-        scene.add(p1);
-        scene.add(p2);
+        scene.addActor(p1);
+        scene.addActor(p2);
         setCurrentScene(scene);
 
         SoundSystemConfig.setLogger(new AdvSoundSystemLogger(Logger.getInstance()));
@@ -133,7 +107,7 @@ public class TestGame3 extends BasicGame {
         }
         soundSystem.setVolume("background", 0.01F);*/
 
-    }
+   /* }
 
     @Override
     protected void exit() {
@@ -144,4 +118,4 @@ public class TestGame3 extends BasicGame {
     public TestGame3() {
         super(1000, 680, "Test game 3");
     }
-}
+}*/

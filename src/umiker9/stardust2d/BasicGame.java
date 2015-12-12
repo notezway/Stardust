@@ -4,13 +4,18 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
+import umiker9.stardust2d.systems.error.Error;
+import umiker9.stardust2d.systems.error.ErrorBuilder;
 import umiker9.stardust2d.systems.error.ErrorStack;
 import umiker9.stardust2d.systems.io.HID.InputManager;
 import umiker9.stardust2d.systems.log.Logger;
+import umiker9.stardust2d.util.TimeUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by miker9 on 22/11/2015.
@@ -18,48 +23,43 @@ import java.io.PrintStream;
 public class BasicGame {
     protected Window window;
     protected Renderer renderer;
-    protected Scene currentScene;
     protected InputManager inputManager;
+    protected Map<String, Scene> scenes = new HashMap<>();
+    protected Scene currentScene;
+    private String title;
     private int width;
     private int height;
     private boolean fullScreen;
-    private double graphicsScale;
-    private String title;
     private long lastUpdateTime;
 
-    public BasicGame(int width, int height, double graphicsScale, boolean fullScreen, String title) {
+    public BasicGame(int width, int height, boolean fullScreen, String title) {
         this.width = width;
         this.height = height;
         this.fullScreen = fullScreen;
         this.title = title;
-        this.graphicsScale = graphicsScale;
-    }
-
-    public BasicGame(int width, int height, double graphicsScale,  String title) {
-        this(width, height, graphicsScale, false, title);
     }
 
     public BasicGame(int width, int height, String title) {
-        this(width, height, 1, false, title);
+        this(width, height, false, title);
     }
 
     public BasicGame(String title) {
         this(640, 480, title);
     }
 
-    public void start() {
-        boolean success = false;
+    public void launch() {
+        //Start logger
+
         try {
             File f = new File("log.txt");
             if((!f.exists() || f.delete()) && f.createNewFile()) {
                 PrintStream toFile = new PrintStream(f);
                 Logger.createInstance(new Logger(System.out, toFile));
-                success = true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(!success) {
+            ErrorStack.addError(new ErrorBuilder().setLevel(Error.WARNING)
+                    .setMessage("Could not create log.txt, logging to system.out").setException(e).finish());
+
             Logger.createDefaultInstance();
         }
 
@@ -76,7 +76,9 @@ public class BasicGame {
         try {
             window = new Window(width, height, fullScreen);
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            ErrorStack.addError(new ErrorBuilder().setLevel(Error.CRITICAL_ERROR)
+                    .setMessage("Could not initialise display").setException(e).finish());
+
             Logger.warnInst("[Stardust] Error during LWJGL initialisation. Exiting..");
             exit(1);
         }
@@ -84,34 +86,33 @@ public class BasicGame {
         window.setVSyncEnabled(true);
 
         Logger.logInst("[Stardust] initialising renderer");
-        renderer = new Renderer((int)(width*graphicsScale), (int)(height*graphicsScale), true);
+        renderer = new Renderer(width, height);
         renderer.init();
         Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
-
         Logger.logInst("[Stardust] Initialising input");
         inputManager = new InputManager();
         Logger.logInst("[Stardust] Engine initialisation is finished");
     }
 
     protected void run() {
-        lastUpdateTime = System.nanoTime();
+        lastUpdateTime = TimeUtil.getCurrentTime();
 
         while (!window.isCloseRequested()) {
             //Handle errors
             while(ErrorStack.hasErrors()) {
-                Logger.warnInst("[Stardust] " + ErrorStack.getNextError());
+                logError(ErrorStack.getNextError());
             }
 
             //Check if window was resized
             if(window.wasResized()) {
                 window.updateViewport();
-                renderer.setWidth((int)(window.getWidth()*graphicsScale));
-                renderer.setHeight((int)(window.getHeight()*graphicsScale));
+                renderer.setWidth(window.getWidth());
+                renderer.setHeight(window.getHeight());
             }
 
             //Calculate delta
-            long currentTime = System.nanoTime();
-            long delta = currentTime - lastUpdateTime;
+            long currentTime = TimeUtil.getCurrentTime();
+            double delta = (currentTime - lastUpdateTime) / (double) TimeUtil.getTimePrecission();
             lastUpdateTime = currentTime;
 
             //Handle input
@@ -126,7 +127,7 @@ public class BasicGame {
         }
     }
 
-    private void update(long delta) {
+    private void update(double delta) {
         if(currentScene != null) {
             currentScene.update(delta);
         }
@@ -144,25 +145,48 @@ public class BasicGame {
     }
 
     private void exit(int errorCode) {
+        while (ErrorStack.hasErrors()) {
+            logError(ErrorStack.getNextError());
+        }
+
         if(errorCode == 0) {
-            Logger.logInst("[Stardust] Exiting with no errors");
+            Logger.logInst("[Stardust] Exiting...");
         } else {
             Logger.warnInst("[Stardust] Exiting with error code: " + errorCode);
         }
         System.exit(errorCode);
     }
 
+    private void logError(Error error) {
+        Logger.warnInst("[Stardust] " + error.toString());
+    }
+
+    public void addScene(Scene scene) {
+        scenes.put(scene.getName(), scene);
+        inputManager.addInputListener(scene);
+    }
+
     public Scene getCurrentScene() {
         return currentScene;
     }
 
-    public void setCurrentScene(Scene currentScene) {
-        if (this.currentScene != null) {
-            this.currentScene.setActive(false);
+    public void setCurrentScene(String sceneName) {
+        if (scenes.containsKey(sceneName)) {
+            Logger.logInst("[Stardust] Entering scene [" + sceneName + "]");
+            if (this.currentScene != null) {
+                this.currentScene.onSceneLeft();
+            }
+
+            this.currentScene = scenes.get(sceneName);
+            currentScene.onSceneEntered();
+        } else {
+            ErrorStack.addError(new ErrorBuilder().setLevel(Error.WARNING)
+                    .setMessage("Could not find scene [" + sceneName + "]").finish());
         }
-        this.currentScene = currentScene;
-        inputManager.addListener(currentScene);
-        currentScene.setActive(true);
+    }
+
+    public Scene getSceneByName(String sceneName) {
+        return scenes.get(sceneName);
     }
 
     public Window getWindow() {

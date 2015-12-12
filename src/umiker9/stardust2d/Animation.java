@@ -13,13 +13,13 @@ public class Animation {
     protected double animationSpeed;
     protected long frameTime;
 
-    public void update(long delta) {
+    public void update(double delta) {
         if (playing) {
             frameTime += delta;
 
-            if (frameTime / Stardust2D.timePrecission > 1.0 / animationSpeed) {
+            if (frameTime > 1.0 / animationSpeed) {
                 currentFrame += 1;
-                frameTime -= (1.0 / animationSpeed) * Stardust2D.timePrecission;
+                frameTime -= (1.0 / animationSpeed);
             }
 
             if (currentFrame >= lasFrame) {
