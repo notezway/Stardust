@@ -2,11 +2,11 @@ package umiker9.stardust2d;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import paulscode.sound.SoundSystem;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
 import umiker9.stardust2d.systems.io.HID.InputManager;
-import umiker9.stardust2d.systems.log.LogLevel;
 import umiker9.stardust2d.systems.log.Logger;
 
 import java.io.File;
@@ -17,16 +17,16 @@ import java.io.PrintStream;
  * Created by miker9 on 22/11/2015.
  */
 public class BasicGame {
+    protected Window window;
+    protected Renderer renderer;
+    protected Scene currentScene;
+    protected InputManager inputManager;
+    protected SoundSystem soundSystem;
     private int width;
     private int height;
     private boolean fullScreen;
     private double graphicsScale;
     private String title;
-    protected Window window;
-    protected Renderer renderer;
-    protected Scene currentScene;
-    protected InputManager inputManager;
-
     private long lastUpdateTime;
 
     public BasicGame(int width, int height, double graphicsScale, boolean fullScreen, String title) {
@@ -89,6 +89,7 @@ public class BasicGame {
         renderer = new Renderer((int)(width*graphicsScale), (int)(height*graphicsScale), true);
         renderer.init();
         Logger.logInst("[Stardust] Using OpenGL " + renderer.getGLVersion());
+
         Logger.logInst("[Stardust] Initialising input");
         inputManager = new InputManager();
         Logger.logInst("[Stardust] Engine initialisation is finished");

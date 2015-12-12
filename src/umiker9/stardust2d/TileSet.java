@@ -45,6 +45,10 @@ public class TileSet {
         return texture.getHeight() / tileHeight;
     }
 
+    public int getTilesTotal() {
+        return getTilesH() * getTilesV();
+    }
+
     public int getTileWidth() {
         return tileWidth;
     }
