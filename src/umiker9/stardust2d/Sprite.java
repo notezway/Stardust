@@ -17,6 +17,7 @@ public class Sprite extends GameObject implements Renderable {
     protected double originY;
     protected double rotation;
     protected Tile image;
+    protected Animation animation;
     protected Color color = Color.WHITE;
 
     public Sprite() {
@@ -65,16 +66,30 @@ public class Sprite extends GameObject implements Renderable {
     }
 
     public void draw(Renderer renderer) {
-        renderer.drawTexturedQuad(-originX, -originY, width, height, image);
+        if (animation != null) {
+            renderer.drawTexturedQuad(-originX, -originY, width, height, animation.getCurrentTile());
+        } else {
+            renderer.drawTexturedQuad(-originX, -originY, width, height, image);
+        }
     }
 
     public void update(double delta) {
-
+        if (animation != null) {
+            animation.update(delta);
+        }
     }
 
     public void setCentered() {
         setOriginX(getWidth() / 2);
         setOriginY(getHeight() / 2);
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
     }
 
     public double getX() {
@@ -137,12 +152,12 @@ public class Sprite extends GameObject implements Renderable {
         return image;
     }
 
-    public void setImage(Tile image) {
-        this.image = image;
-    }
-
     public void setImage(Texture2D texture) {
         this.image = new Tile(texture);
+    }
+
+    public void setImage(Tile image) {
+        this.image = image;
     }
 
     public Color getColor() {

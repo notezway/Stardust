@@ -1,17 +1,43 @@
 package umiker9.stardust2d.test;
 
+import paulscode.sound.SoundSystem;
+import paulscode.sound.SoundSystemConfig;
+import paulscode.sound.SoundSystemException;
+import paulscode.sound.codecs.CodecWav;
+import paulscode.sound.libraries.LibraryLWJGLOpenAL;
+import umiker9.stardust2d.*;
+import umiker9.stardust2d.graphics.Color;
+import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
+import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
+import umiker9.stardust2d.math.Vec2;
+import umiker9.stardust2d.physics.Ball;
+import umiker9.stardust2d.physics.PhysicalBody;
+import umiker9.stardust2d.systems.io.FileIO;
+import umiker9.stardust2d.systems.io.Resource;
+import umiker9.stardust2d.systems.log.AdvSoundSystemLogger;
+import umiker9.stardust2d.systems.log.LogLevel;
+import umiker9.stardust2d.systems.log.Logger;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Created by Notezway on 23.11.2015.
  */
-/*public class TestGame2 extends BasicGame {
+public class TestGame2 extends BasicGame {
 
     private static TestGame2 instance;
-    private Texture2D tex;
     SoundSystem soundSystem;
+    private Texture2D tex;
+
+    public TestGame2() {
+        super(800, 700, "Test game 2");
+    }
 
     public static void main(String args[]) {
         instance = new TestGame2();
         instance.launch();
+        Stardust2D.minTPS = 1000;
     }
 
     protected void init() {
@@ -40,16 +66,16 @@ package umiker9.stardust2d.test;
         ball6.setColor(Color.BLUE.mix(Color.RED));
 
 
-        Scene scene = new Scene() {
+        final Scene scene = new Scene("main", new Camera()) {
             @Override
-            public void update(long delta) {
+            public void update(double delta) {
                 super.update(delta);
                 GameObject actor1, actor2;
 
-                for(int i = 0; i < actors.size(); i++) {
-                    actor1 = actors.get(i);
-                    for(int j = i + 1; j < actors.size(); j++) {
-                        actor2 = actors.get(j);
+                for (int i = 0; i < getActors().size(); i++) {
+                    actor1 = getActors().get(i);
+                    for (int j = i + 1; j < getActors().size(); j++) {
+                        actor2 = getActors().get(j);
                         if(actor1 instanceof PhysicalBody && actor2 instanceof PhysicalBody) {
                             PhysicalBody body1 = (PhysicalBody) actor1;
                             PhysicalBody body2 = (PhysicalBody) actor2;
@@ -77,7 +103,8 @@ package umiker9.stardust2d.test;
         scene.addActor(ball4);
         scene.addActor(ball5);
         scene.addActor(ball6);
-        setCurrentScene(scene);
+        addScene(scene);
+        setCurrentScene("main");
 
         SoundSystemConfig.setLogger(new AdvSoundSystemLogger(Logger.getInstance()));
         try {
@@ -100,8 +127,4 @@ package umiker9.stardust2d.test;
         soundSystem.cleanup();
         super.exit();
     }
-
-    public TestGame2() {
-        super(800, 700, "Test game 2");
-    }
-}*/
+}

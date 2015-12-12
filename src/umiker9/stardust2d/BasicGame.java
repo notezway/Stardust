@@ -119,7 +119,15 @@ public class BasicGame {
             inputManager.handleInput();
 
             //Update and render
+            double maxTickTime = 1.0 / Stardust2D.minTPS;
+
+            while (delta > maxTickTime) {
+                update(maxTickTime);
+                delta -= maxTickTime;
+            }
             update(delta);
+
+            //Render
             render();
 
             //Update display

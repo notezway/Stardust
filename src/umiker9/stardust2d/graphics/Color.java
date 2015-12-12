@@ -6,7 +6,6 @@ import umiker9.stardust2d.math.MathUtil;
  * Created by Notezway on 23.11.2015.
  */
 public class Color {
-
     public static final Color BLACK = new Color(0, 0, 0);
     public static final Color GRAY = new Color(128, 128, 128);
     public static final Color SILVER = new Color(192, 192, 192);
@@ -159,5 +158,4 @@ public class Color {
                 ((long)(b*0xFFFF)) << 16 |
                 ((long)(a*0xFFFF));
     }
-
 }

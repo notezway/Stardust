@@ -27,7 +27,6 @@ public class TestGame1 extends BasicGame {
         Stardust2D.invertYAxis = true;
         instance = new TestGame1();
         instance.launch();
-
     }
 
     @Override
@@ -38,6 +37,7 @@ public class TestGame1 extends BasicGame {
 
         Texture2D texture = TextureLoader.loadTexture(FileIO.getResource("Assets/jackal.png"));
         TileSet tileset = new TileSet(texture, 16, 16);
+        Animation animation = new Animation(tileset, 0, 3, 4, true);
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene("main");
@@ -57,7 +57,21 @@ public class TestGame1 extends BasicGame {
                 x += delta * 100;
                 rotation += delta * 40;
             }
+
+            @Override
+            public void onMouseButtonPressed(MouseEvent event) {
+                super.onMouseButtonPressed(event);
+                animation.stop();
+            }
+
+            @Override
+            public void onMouseButtonReleased(MouseEvent event) {
+                super.onMouseButtonReleased(event);
+                animation.play();
+            }
         };
+        testSprite.setAnimation(animation);
+        animation.play();
 
         mainScene.addInputListener(new InputListener() {
             @Override

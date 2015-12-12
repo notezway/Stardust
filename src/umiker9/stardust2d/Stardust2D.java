@@ -5,6 +5,7 @@ package umiker9.stardust2d;
  */
 public class Stardust2D {
     public static boolean invertYAxis = true;
+    public static int minTPS = 60;
 
     public static String getVersion() {
         return "0.0.3 [DEV]";
