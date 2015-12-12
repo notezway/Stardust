@@ -3,6 +3,7 @@ package umiker9.stardust2d.test;
 import org.lwjgl.input.Keyboard;
 import umiker9.stardust2d.*;
 import umiker9.stardust2d.graphics.Color;
+import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
@@ -50,6 +51,11 @@ public class TestGame1 extends BasicGame {
             }
         };
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
+            @Override
+            public void draw(Renderer renderer) {
+                super.draw(renderer);
+            }
+
             @Override
             public void update(double delta) {
                 super.update(delta);

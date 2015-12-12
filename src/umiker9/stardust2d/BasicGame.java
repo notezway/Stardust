@@ -121,6 +121,13 @@ public class BasicGame {
             //Update and render
             double maxTickTime = 1.0 / Stardust2D.minTPS;
 
+            //If we were lagging for too long, just skip some updates
+            if (delta > 10 * maxTickTime) {
+                delta = maxTickTime;
+                Logger.logInst("[Stardust] Houston, it feels a bit laggy here");
+            }
+
+            //Spread delta between many udates, to avoid tunneling
             while (delta > maxTickTime) {
                 update(maxTickTime);
                 delta -= maxTickTime;

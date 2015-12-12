@@ -5,7 +5,10 @@ import paulscode.sound.SoundSystemConfig;
 import paulscode.sound.SoundSystemException;
 import paulscode.sound.codecs.CodecWav;
 import paulscode.sound.libraries.LibraryLWJGLOpenAL;
-import umiker9.stardust2d.*;
+import umiker9.stardust2d.BasicGame;
+import umiker9.stardust2d.Camera;
+import umiker9.stardust2d.GameObject;
+import umiker9.stardust2d.Scene;
 import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
@@ -37,7 +40,6 @@ public class TestGame2 extends BasicGame {
     public static void main(String args[]) {
         instance = new TestGame2();
         instance.launch();
-        Stardust2D.minTPS = 1000;
     }
 
     protected void init() {
