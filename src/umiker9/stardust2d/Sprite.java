@@ -7,7 +7,7 @@ import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 /**
  * Created by miker9 on 23/11/2015.
  */
-public class Sprite extends GameObject implements Renderable {
+public class Sprite extends GameObject implements Renderable, Updatable {
     protected double x;
     protected double y;
     protected double depth;
@@ -134,12 +134,12 @@ public class Sprite extends GameObject implements Renderable {
         return image;
     }
 
-    public void setImage(Texture2D texture) {
-        this.image = new Tile(texture);
-    }
-
     public void setImage(Tile image) {
         this.image = image;
+    }
+
+    public void setImage(Texture2D texture) {
+        this.image = new Tile(texture);
     }
 
     public Color getColor() {

@@ -2,11 +2,13 @@ package umiker9.stardust2d.test;
 
 import org.lwjgl.input.Keyboard;
 import umiker9.stardust2d.*;
+import umiker9.stardust2d.graphics.Color;
 import umiker9.stardust2d.graphics.lwjgl2.Texture2D;
 import umiker9.stardust2d.graphics.lwjgl2.TextureLoader;
 import umiker9.stardust2d.systems.io.FileIO;
-import umiker9.stardust2d.systems.io.HID.InputListener;
+import umiker9.stardust2d.systems.io.HID.InputHandler;
 import umiker9.stardust2d.systems.io.HID.KeyboardEvent;
+import umiker9.stardust2d.systems.io.HID.MouseEvent;
 
 /**
  * Created by miker9 on 22/11/2015.
@@ -37,7 +39,13 @@ public class TestGame1 extends BasicGame {
         Texture2D background = TextureLoader.loadTexture(FileIO.getResource("Assets/Stars.png"));
 
         mainScene = new Scene();
-        Sprite testSprite2 = new Sprite(tileset.getTile(0));
+        Sprite testSprite2 = new Sprite(tileset.getTile(0)) {
+            @Override
+            public void onMouseButtonPressed(MouseEvent event) {
+                super.onMouseButtonPressed(event);
+                setColor(Color.RED);
+            }
+        };
         Sprite testSprite = new Sprite(texture, 100, 100, 50, 50) {
             @Override
             public void update(long delta) {
@@ -48,7 +56,7 @@ public class TestGame1 extends BasicGame {
             }
         };
 
-        inputManager.addListener(new InputListener() {
+        inputManager.addListener(new InputHandler() {
             @Override
             public void onKeyboardKeyReleased(KeyboardEvent event) {
                 super.onKeyboardKeyReleased(event);

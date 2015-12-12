@@ -3,11 +3,8 @@ package umiker9.stardust2d.systems.io.HID;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.util.*;
-
-public class InputManager {
+public class InputManager extends InputRelay {
     protected InputState inputState;
-    protected final Queue<InputListener> listeners = new PriorityQueue<>((Comparator<InputListener>) (o1, o2) -> o2.getPriority() - o1.getPriority());
 
     public InputManager() {
         inputState = new InputState();
@@ -33,7 +30,7 @@ public class InputManager {
             event.setEventCharacter(Keyboard.getEventCharacter());
             event.setEventNanoseconds(Keyboard.getEventNanoseconds());
 
-            postEvent(event);
+            onInputEvent(event);
         }
 
         while (Mouse.next()) {
@@ -58,28 +55,11 @@ public class InputManager {
             event.setEventButtonState(Mouse.getEventButtonState());
             event.setEventNanoseconds(Mouse.getEventNanoseconds());
 
-            postEvent(event);
-        }
-    }
-
-    protected void postEvent(InputEvent e) {
-        for (InputListener listener : listeners) {
-            if(e.isCancelled()) {
-                break;
-            }
-            listener.onInputEvent(e);
+            onInputEvent(event);
         }
     }
 
     public InputState getInputState() {
         return inputState;
-    }
-
-    public void addListener(InputListener inputListener) {
-        listeners.add(inputListener);
-    }
-
-    public void removeListener(InputListener inputListener) {
-        listeners.remove(inputListener);
     }
 }

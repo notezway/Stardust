@@ -2,7 +2,6 @@ package umiker9.stardust2d;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import paulscode.sound.SoundSystem;
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
 import umiker9.stardust2d.graphics.lwjgl2.Window;
 import umiker9.stardust2d.systems.error.ErrorStack;
@@ -21,7 +20,6 @@ public class BasicGame {
     protected Renderer renderer;
     protected Scene currentScene;
     protected InputManager inputManager;
-    protected SoundSystem soundSystem;
     private int width;
     private int height;
     private boolean fullScreen;
@@ -159,7 +157,12 @@ public class BasicGame {
     }
 
     public void setCurrentScene(Scene currentScene) {
+        if (this.currentScene != null) {
+            this.currentScene.setActive(false);
+        }
         this.currentScene = currentScene;
+        inputManager.addListener(currentScene);
+        currentScene.setActive(true);
     }
 
     public Window getWindow() {

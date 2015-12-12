@@ -200,4 +200,8 @@ public class Renderer {
     public void setColor(Color color) {
         glColor4d(color.getR(), color.getG(), color.getB(), color.getA());
     }
+
+    public void setBackgroundColor(Color color) {
+        glClearColor((float) color.getR(), (float) color.getG(), (float) color.getB(), (float) color.getA());
+    }
 }

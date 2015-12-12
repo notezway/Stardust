@@ -1,6 +1,7 @@
 package umiker9.stardust2d;
 
 import umiker9.stardust2d.graphics.lwjgl2.Renderer;
+import umiker9.stardust2d.systems.io.HID.InputRelay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by miker9 on 22/11/2015.
  */
 
-public class Scene {
+public class Scene extends InputRelay {
     protected List<GameObject> actors = new ArrayList<>();
     protected Camera camera;
 
@@ -55,10 +56,12 @@ public class Scene {
     public void add(GameObject actor) {
         actor.setScene(this);
         actors.add(actor);
+        inputListeners.add(actor);
     }
 
     public void remove(GameObject actor) {
         actors.remove(actor);
+        inputListeners.remove(actor);
     }
 
     public Camera getCamera() {
